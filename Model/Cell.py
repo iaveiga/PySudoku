@@ -8,8 +8,6 @@ class Cell(object):
         self.__y = y
         self.__value = value
 
-
-    
     #Getters
     def getX(self):
         return self.__x
