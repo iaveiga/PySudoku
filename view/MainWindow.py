@@ -80,7 +80,8 @@ class Ui_MainWindow(object):
         self.menuArchivo.addSeparator()
         self.menuArchivo.addAction(self.actionSALIR)
         self.menubar.addAction(self.menuArchivo.menuAction())
-
+        self.loadLE()
+        
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -94,3 +95,12 @@ class Ui_MainWindow(object):
         self.actionGuardar.setText(_translate("MainWindow", "Guardar", None))
         self.actionSALIR.setText(_translate("MainWindow", "Salir", None))
 
+    def loadLE(self):
+        for i in range(0,9):
+            for j in range(0,9):
+                lineE = QtGui.QLineEdit()
+                self.gridLayout.addWidget(lineE,i,j)
+                lineE.setMaxLength(1)
+                lineE.setInputMask("0")
+                lineE.setFixedSize(30,30)
+                lineE.show()
