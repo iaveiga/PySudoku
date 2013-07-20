@@ -2,7 +2,8 @@ from Cell import Cell
 
 class Sudoku(object):
     pass
-    
+
+    '''
     def __init__(self):
         self.matrix = []
         li = []
@@ -11,9 +12,28 @@ class Sudoku(object):
                 aux = Cell(1,1,0)
                 li.append(aux)
             self.matrix.append(li)
+    '''
+
+    def __init__(self):
+        self.matrix = []
+        self.matrix.append([9,0,0,0,2,0,7,5,0])
+        self.matrix.append([6,0,0,0,5,0,0,4,0])
+        self.matrix.append([0,2,0,4,0,0,0,1,0])
+        self.matrix.append([2,0,8,0,0,0,0,0,0])
+        self.matrix.append([0,7,0,5,0,9,0,6,0])
+        self.matrix.append([0,0,0,0,0,0,4,0,1])
+        self.matrix.append([0,1,0,0,0,5,0,8,0])
+        self.matrix.append([0,9,0,0,7,0,0,0,4])
+        self.matrix.append([0,8,2,0,4,0,0,0,6])
 
     def setCell(self, i = int, j = int, c = Cell):
         self.matrix[i][j] = c
+
+    def printS(self):
+        for i in range(0,9):
+            for j in range(0,9):
+                print self.matrix[i][j] , "\t "
+            print "\n"
 
     def getCell(self, i = int ,j = int):
         return self.matrix[i][j]
@@ -30,57 +50,57 @@ class Sudoku(object):
                     
     def inList(ls = list, b = Cell):
         if len(ls) == 0:
-            return false
+            return False
         for i in range(0,len(ls)):
             if ls[i].getValue() == b.getValue():
-                return true
-        return false
+                return True
+        return False
 
     def usedInRow(self, row = int, num = int):
         for col in range(0,9):
-            if (self.getCell(row,col).getValue == num ):
-                return true
-        return false
+            #if (self.getCell(row,col).getValue == num ):
+            if (self.matrix[row][col] == num ):
+                return False
+        return True
 
     def usedInCol(self, col = int, num = int):
         for row in range(0,9):
-            	if (self.getCell(row,col).getValue() == num  ):
-                    return true
-        return false
+            #if (self.getCell(row,col).getValue() == num):
+            if (self.matrix[row][col] == num ):
+                return False
+        return True
 
     def usedInBox(self, startRow = int, startCol = int, num = int):
         for i in range(0,3):
             for j in range(0,3):
-                if(self.getCell(i + startRow,j + startCol).getValue() == num):
-                    return true
-        return false
+                #if(self.getCell(i + startRow,j + startCol).getValue() == num):
+                if(self.matrix[i + startRow][j + startCol] == num):
+                    return False
+        return True
 
     def noConflicts(self, row = int, col = int, num = int):
-        resp = (not self.usedInRow(self, row, num)) and (not self.usedInCol(self,col,num))
-        resp = resp and (not self.usedInBox(self,row - row%3, col - col%3,num))
+        resp = (self.usedInRow(row, num)) and (self.usedInCol(col,num))
+        resp = resp and (self.usedInBox(row - row%3, col - col%3,num))
         return resp
 
     def next(self, row = int, col = int):
         if col < 8:
-            solve(self,row, col + 1)
+            self.solve(row, col + 1)
         else :
-            solve (self, row + 1, 0)    
+            self.solve (row + 1, 0)    
         
 
     def solve(self, row, col):
-        if self.matrix[i][j] != 0:
-            next(self, row, col)
+        if row > 8:
+            return 0
+        if self.matrix[row][col] != 0:
+            self.next(row, col)
         else:
-            for i in range(0,9):
-                if noConflicts(self, row, col, num):
-                    self.matrix[i][j] = num
-                next(self, row, col)
-        self.matrix[i][j] = 0
+            for num in range(1,9+1):
+                if self.noConflicts(row, col, num):
+                    self.matrix[row][col] = num
+                    self.next(row, col)
+            self.matrix[row][col] = 0
                 
     def solveAll(self):
-        solve(self,0,0)
-
-    
-
-
-    
+        self.solve(0,0)
