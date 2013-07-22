@@ -86,7 +86,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "PY - SUDOKU", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Pysudoku", None))
         self.label.setText(_translate("MainWindow", "TIEMPO:", None))
         self.btn_guardar.setText(_translate("MainWindow", "Guardar", None))
         self.lbl_jugador.setText(_translate("MainWindow", "Jugador:", None))

@@ -31,3 +31,6 @@ class Cell(object):
     
     def equals(self, other):
         return self.__x == other.getX() and self.__y == other.getY() and self.__value == other.getValue()
+
+    def printC(self):
+        print "x: ", self.__x , " , y:", self.__y, " , v: ", self.__value
