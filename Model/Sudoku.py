@@ -1,5 +1,5 @@
 from Cell import Cell
-
+import sys
 class Sudoku(object):
     pass
 
@@ -49,17 +49,16 @@ class Sudoku(object):
         return resp
 
     def next(self, row = int, col = int):
-        if col < 8:
+        if col < 7:
             self.solve(row, col + 1)
         else:
             self.solve (row + 1, 0)
 
     def solve(self, row = int, col = int):
         if row > 8:
-            print "Solved" #end of recursion
-            self.printS()
-            return 0
-        if self.getCell(row,col).getValue() != 0: 
+            print 1
+            sys.exit()
+        elif self.getCell(row,col).getValue() != 0: 
             self.next(row, col) #if a cell is not empty, continue next cell
         else:
             for num in range(1,10):
@@ -69,7 +68,7 @@ class Sudoku(object):
                     self.next(row,col)
             c = Cell(row,col,0)
             self.setCell(row,col,c)
-            return 0
+
 
     def solveAll(self):
         self.solve(0,0)
