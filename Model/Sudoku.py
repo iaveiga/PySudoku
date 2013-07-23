@@ -3,29 +3,15 @@ from Cell import Cell
 class Sudoku(object):
     pass
 
-  
+
     def __init__(self):
-        self.matrix = []
+        self.matrix = [[0 for x in xrange(9)] for x in xrange(9)] #Crea una matriz vacia de 9 x 9
         li = []
         for i in range(0,9):
             for j in range(0,9):
                 aux = Cell(i,j,0)
-                li.append(aux)
-            self.matrix.append(li)
+                self.matrix[i][j] = aux
 
-    '''
-    def __init__(self):
-        self.matrix = []
-        self.matrix.append([9,0,0,0,2,0,7,5,0])
-        self.matrix.append([6,0,0,0,5,0,0,4,0])
-        self.matrix.append([0,2,0,4,0,0,0,1,0])
-        self.matrix.append([2,0,8,0,0,0,0,0,0])
-        self.matrix.append([0,7,0,5,0,9,0,6,0])
-        self.matrix.append([0,0,0,0,0,0,4,0,1])
-        self.matrix.append([0,1,0,0,0,5,0,8,0])
-        self.matrix.append([0,9,0,0,7,0,0,0,4])
-        self.matrix.append([0,8,2,0,4,0,0,0,6])
-    '''
     def setCell(self, i = int, j = int, c = Cell):
         self.matrix[i][j] = c
 
@@ -40,14 +26,12 @@ class Sudoku(object):
 
     def usedInRow(self, row = int, num = int):
         for col in range(0,9):
-            #if (self.matrix[row][col] == num ):
             if (self.getCell(row,col).getValue == num):
                 return False
         return True
 
     def usedInCol(self, col = int, num = int):
         for row in range(0,9):
-            #if (self.matrix[row][col] == num ):
             if (self.getCell(row,col).getValue() == num):
                 return False
         return True
@@ -55,7 +39,6 @@ class Sudoku(object):
     def usedInBox(self, startRow = int, startCol = int, num = int):
         for i in range(0,3):
             for j in range(0,3):
-                #if(self.matrix[i + startRow][j + startCol] == num):
                 if(self.getCell(i + startRow,j + startCol).getValue() == num):
                     return False
         return True
@@ -69,25 +52,25 @@ class Sudoku(object):
         if col < 8:
             self.solve(row, col + 1)
         else:
-            self.solve (row + 1, 0)    
-        
+            self.solve (row + 1, 0)
 
-    def solve(self, row, col):
+    def solve(self, row = int, col = int):
         if row > 8:
+            print "Solved" #end of recursion
             self.printS()
             return 0
-        if self.matrix[row][col].getValue() != 0:
-            self.next(row, col)
+        if self.getCell(row,col).getValue() != 0: 
+            self.next(row, col) #if a cell is not empty, continue next cell
         else:
-            for num in range(1,9+1):
+            for num in range(1,10):
                 if self.noConflicts(row, col, num):
-                    #self.matrix[row][col]. = num
                     c = Cell(row,col,num)
-                    self.setCell(row,col,c)
-                    self.next(row, col)
+                    self.setCell(row,col, c)
+                    self.next(row,col)
             c = Cell(row,col,0)
             self.setCell(row,col,c)
-                
+            return 0
+
     def solveAll(self):
         self.solve(0,0)
 
@@ -96,9 +79,7 @@ class Sudoku(object):
         lines = f.readlines()
         for i in range(0,9):
             p = lines[i].lstrip()
-            #print "len p: ", len(p), "p: ", p
             for j in range(0,9):
-                c = Cell(i,j,p[j])
+                c = Cell(i,j,int(p[j]))
                 self.setCell(i,j,c)
-                self.getCell(i,j).printC()
         f.close()
