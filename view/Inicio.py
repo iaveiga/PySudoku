@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Inicio.ui'
 #
-# Created: Sun Jul 14 19:25:42 2013
+# Created: Sat Jul 20 18:46:52 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -71,6 +71,8 @@ class Ui_Dialog(object):
         self.label_3.setObjectName(_fromUtf8("label_3"))
 
         self.retranslateUi(Dialog)
+        QtCore.QObject.connect(self.btn_salir, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.Salir)
+        QtCore.QObject.connect(self.btn_Jugar, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.Jugar)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):

@@ -177,5 +177,42 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_salir</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>Salir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>281</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>174</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_Jugar</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>Jugar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>174</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>Salir()</slot>
+  <slot>Jugar()</slot>
+ </slots>
 </ui>
