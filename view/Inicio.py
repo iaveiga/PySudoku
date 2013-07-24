@@ -8,7 +8,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-
+from MainWindow import Ui_MainWindow
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -71,6 +71,9 @@ class Ui_Dialog(object):
         self.label_3.setObjectName(_fromUtf8("label_3"))
 
         self.retranslateUi(Dialog)
+        v = Ui_MainWindow()
+        
+        
         QtCore.QObject.connect(self.btn_salir, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.Salir)
         QtCore.QObject.connect(self.btn_Jugar, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.Jugar)
         QtCore.QMetaObject.connectSlotsByName(Dialog)

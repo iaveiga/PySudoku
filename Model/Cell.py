@@ -1,4 +1,5 @@
 # -*- coding: cp1252 -*-
+import cPickle
 class Cell(object):
     pass
     
@@ -34,3 +35,14 @@ class Cell(object):
 
     def printC(self):
         print "x: ", self.__x , " , y:", self.__y, " , v: ", self.__value
+
+    def save(self):
+        f = open("save.sudo","wb")
+        cPickle.dump(self,f,protocol = 2)
+        f.close()
+                 
+    def load(self):
+        f = open("save.sudo","rb")
+        ob = cPickle.load(f)
+        f.close()
+        return (ob)
