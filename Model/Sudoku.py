@@ -1,5 +1,8 @@
 from Cell import Cell
 import sys
+import random
+
+
 class Sudoku(object):
     pass
 
@@ -56,7 +59,6 @@ class Sudoku(object):
 
     def solve(self, row = int, col = int):
         if row > 8:
-            print 1
             sys.exit()
         elif self.getCell(row,col).getValue() != 0: 
             self.next(row, col) #if a cell is not empty, continue next cell
@@ -82,3 +84,14 @@ class Sudoku(object):
                 c = Cell(i,j,int(p[j]))
                 self.setCell(i,j,c)
         f.close()
+
+    def cleanBoard(self):
+        for i in range(0,9):
+            for j in range(0,9):
+                self.getCell(i,j).setValue(0)
+
+    def parse(self, board):
+        for i in range(0,9):
+            for j in range(0,9):
+                c = Cell(i,j,board[i][j])
+                self.setCell(i,j,c)
