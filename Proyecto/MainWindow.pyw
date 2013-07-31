@@ -13,9 +13,15 @@ class MainWindow(QtGui.QMainWindow):
         self.game = None
 
     #Accion al momento de dar click en el boton Guardar
-    def Guardar(self):
-        return 0     
+    def Guardar(path):
+        file_ = open(path,"wb")
+        cPickle.dump(self.game,file_,protocol = 2)
+        file_.close()
 
+    def cargar(path):
+        fie_ = open(path,"rb")
+        ob = cPickle.load(file_)
+        self.game = ob
     #Accion al momento de dar click en el boton Verificar
     def Verificar(self):
         return 0
@@ -23,7 +29,7 @@ class MainWindow(QtGui.QMainWindow):
     #Accion al momento de dar click en el submenu Salir
     def Salir(self):
         sys.exit(0)
-                
+
     def loadNew(self, name = str, dif = int):
         #Falta pintar de color distinto
         self.game = Juego(name, dif)
@@ -36,11 +42,13 @@ class MainWindow(QtGui.QMainWindow):
                 value = self.game.juego.getCell(i,j).getValue()
                 if value != 0:
                     c.setText(str(value))
-                    
+
                 self.ui.gridLayout.addWidget(c,i,j)
                 self.ui.txt_jugador.setText(str(name))
                 self.ui.txt_nivel.setText(str(dif))
-                
+
+
+
     def saveGame(path):
         file_ = open(path,"wb")
         cPickle.dump(self.game,file_,protocol = 2)
@@ -50,7 +58,7 @@ class MainWindow(QtGui.QMainWindow):
         fie_ = open(path,"rb")
         ob = cPickle.load(file_)
         self.game = ob
-        
+
 if __name__=="__main__":
     app = QtGui.QApplication(sys.argv)
     myapp = MainWindow()

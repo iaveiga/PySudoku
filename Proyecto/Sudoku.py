@@ -95,3 +95,12 @@ class Sudoku(object):
             for j in range(0,9):
                 c = Cell(i,j,board[i][j])
                 self.setCell(i,j,c)
+    def compare(self, other):
+    #retorna la listas de celdas en que other difiere de self
+    #self (tablero lleno), other tablero a jugar
+        li = []
+        for i in range(0,9):
+            for j in range(0,9):
+                if self.getCell(i,j).getValue() != other.getCell(i,j).getValue():
+                    li.append(other.getCell(i,j))
+        return li
