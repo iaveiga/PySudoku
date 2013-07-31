@@ -10,6 +10,7 @@ class Juego(object):
         self.time = 0
         self.juego = Sudoku() #tablero a jugar
         self.tablero = Sudoku()   #tablero lleno
+        self.create(dif)
 
     def create(self, dif = int):
         g = Generator()

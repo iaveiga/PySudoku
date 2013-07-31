@@ -1,7 +1,7 @@
 from PyQt4 import QtCore, QtGui
 import sys
 from Inicio import Ui_Dialog
-from MainWindow import Ui_MainWindow 
+from MainWindow import MainWindow 
 
 class Inicio(QtGui.QMainWindow):
     def __init__(self, parent = None):
@@ -11,7 +11,7 @@ class Inicio(QtGui.QMainWindow):
 
     def Jugar(self):
         m = MainWindow()
-        m.show()
+        
         
     def Salir(self):
         sys.exit(0)
