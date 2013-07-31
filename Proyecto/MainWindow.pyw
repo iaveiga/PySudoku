@@ -1,6 +1,6 @@
 from PyQt4 import QtCore, QtGui
 import sys
-from MainWindow import Ui_MainWindow
+from ui_MainWindow import Ui_MainWindow
 from Juego import Juego
 import cPickle
 
@@ -9,8 +9,21 @@ class MainWindow(QtGui.QMainWindow):
         QtGui.QWidget.__init__(self,parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
         self.game = None
-        
+
+    #Accion al momento de dar click en el boton Guardar
+    def Guardar(self):
+        return 0     
+
+    #Accion al momento de dar click en el boton Verificar
+    def Verificar(self):
+        return 0
+
+    #Accion al momento de dar click en el submenu Salir
+    def Salir(self):
+        sys.exit(0)
+                
     def loadNew(self, name = str, dif = int):
         #Falta pintar de color distinto
         self.game = Juego(name, dif)
@@ -37,11 +50,6 @@ class MainWindow(QtGui.QMainWindow):
         fie_ = open(path,"rb")
         ob = cPickle.load(file_)
         self.game = ob
-
-    def paintCell(color, cell):
-        
-        
-        
         
 if __name__=="__main__":
     app = QtGui.QApplication(sys.argv)
@@ -49,4 +57,4 @@ if __name__=="__main__":
     myapp.show()
     myapp.loadNew("pepe",4)
     sys.exit(app.exec_())
-exit(app.exec_())
+    exit(app.exec_())

@@ -56,7 +56,7 @@
      <string>TIEMPO:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_guardar">
+   <widget class="QPushButton" name="btn_Guardar">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -121,6 +121,19 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_Verificar">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>260</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Verificar</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -154,5 +167,59 @@
   </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_Guardar</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>Guardar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>757</x>
+     <y>252</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>423</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_Verificar</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>Verificar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>757</x>
+     <y>292</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>423</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSALIR</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>Salir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>423</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>Guardar()</slot>
+  <slot>Verificar()</slot>
+  <slot>Salir()</slot>
+ </slots>
 </ui>

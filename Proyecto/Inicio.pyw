@@ -1,16 +1,16 @@
 from PyQt4 import QtCore, QtGui
 import sys
-from Inicio import Ui_Dialog
-from MainWindow import MainWindow 
+from ui_Inicio import Ui_Inicio_Frame
 
 class Inicio(QtGui.QMainWindow):
     def __init__(self, parent = None):
         QtGui.QWidget.__init__(self,parent)
-        self.ui = Ui_Dialog()
+        self.ui = Ui_Inicio_Frame()
         self.ui.setupUi(self)
 
     def Jugar(self):
-        m = MainWindow()
+        if(self.ui.txt_nombre_jugador.text()==""):
+            print"positivo"
         
         
     def Salir(self):

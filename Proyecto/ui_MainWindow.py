@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created: Sun Jul 14 19:34:40 2013
+# Created: Wed Jul 31 11:38:08 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -45,9 +45,9 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.label.setFont(font)
         self.label.setObjectName(_fromUtf8("label"))
-        self.btn_guardar = QtGui.QPushButton(self.centralwidget)
-        self.btn_guardar.setGeometry(QtCore.QRect(720, 220, 75, 23))
-        self.btn_guardar.setObjectName(_fromUtf8("btn_guardar"))
+        self.btn_Guardar = QtGui.QPushButton(self.centralwidget)
+        self.btn_Guardar.setGeometry(QtCore.QRect(720, 220, 75, 23))
+        self.btn_Guardar.setObjectName(_fromUtf8("btn_Guardar"))
         self.lbl_jugador = QtGui.QLabel(self.centralwidget)
         self.lbl_jugador.setGeometry(QtCore.QRect(680, 110, 46, 13))
         self.lbl_jugador.setObjectName(_fromUtf8("lbl_jugador"))
@@ -62,6 +62,9 @@ class Ui_MainWindow(object):
         self.txt_nivel.setEnabled(False)
         self.txt_nivel.setGeometry(QtCore.QRect(682, 180, 151, 20))
         self.txt_nivel.setObjectName(_fromUtf8("txt_nivel"))
+        self.btn_Verificar = QtGui.QPushButton(self.centralwidget)
+        self.btn_Verificar.setGeometry(QtCore.QRect(720, 260, 75, 23))
+        self.btn_Verificar.setObjectName(_fromUtf8("btn_Verificar"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 848, 21))
@@ -80,15 +83,20 @@ class Ui_MainWindow(object):
         self.menuArchivo.addSeparator()
         self.menuArchivo.addAction(self.actionSALIR)
         self.menubar.addAction(self.menuArchivo.menuAction())
+
         self.retranslateUi(MainWindow)
+        QtCore.QObject.connect(self.btn_Guardar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.Guardar)
+        QtCore.QObject.connect(self.btn_Verificar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.Verificar)
+        QtCore.QObject.connect(self.actionSALIR, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.Salir)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "PY - SUDOKU", None))
         self.label.setText(_translate("MainWindow", "TIEMPO:", None))
-        self.btn_guardar.setText(_translate("MainWindow", "Guardar", None))
+        self.btn_Guardar.setText(_translate("MainWindow", "Guardar", None))
         self.lbl_jugador.setText(_translate("MainWindow", "Jugador:", None))
         self.label2.setText(_translate("MainWindow", "Nivel de Juego: ", None))
+        self.btn_Verificar.setText(_translate("MainWindow", "Verificar", None))
         self.menuArchivo.setTitle(_translate("MainWindow", "Archivo", None))
         self.actionGuardar.setText(_translate("MainWindow", "Guardar", None))
         self.actionSALIR.setText(_translate("MainWindow", "Salir", None))

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>Inicio_Frame</class>
+ <widget class="QDialog" name="Inicio_Frame">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -181,7 +181,7 @@
   <connection>
    <sender>btn_salir</sender>
    <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>Inicio_Frame</receiver>
    <slot>Salir()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -197,7 +197,7 @@
   <connection>
    <sender>btn_Jugar</sender>
    <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>Inicio_Frame</receiver>
    <slot>Jugar()</slot>
    <hints>
     <hint type="sourcelabel">
