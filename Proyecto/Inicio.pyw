@@ -12,28 +12,30 @@ class Inicio(QtGui.QMainWindow):
 
     def Jugar(self):
         if(self.ui.rbt_facil.isChecked() and self.ui.txt_nombre_jugador.text != ""):
-            #mando a ventana MainWindow (nombre,1)
-            print"n,1"
+            #mando a ventana MainWindow(nombre del Jugador ,Dificultad:1)
             self.setVisible(False)
             self.w = MainWindow()
+            self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),1)
             self.w.show()
         elif(self.ui.rbt_normal.isChecked() and self.ui.txt_nombre_jugador.text != ""):
-            #mando a ventana MainWindow (nombre,2)
-            print"n,2"
+            #mando a ventana MainWindow(Nombre del Jugador, Dificultad:2)
             self.setVisible(False)
             self.w = MainWindow()
+            self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),2)
             self.w.show()
         elif(self.ui.rbt_avanzado.isChecked() and self.ui.txt_nombre_jugador.text != ""):
-            #mando a ventana MainWindow (nombre,3)
-            print"n,3"
+            #mando a ventana MainWindow(Nombre del Jugador,Dificultad:3)
             self.setVisible(False)
             self.w = MainWindow()
+            self.w = MainWindow()
+            self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),3)
             self.w.show()
         elif(self.ui.rbt_experto.isChecked() and self.ui.txt_nombre_jugador.text != ""):
-            #mando a ventana MainWindow (nombre,4)
-            print"n,4"
+            #mando a ventana MainWindow(Nombre del Jugador,Dificultad:4)
             self.setVisible(False)
             self.w = MainWindow()
+            self.w = MainWindow()
+            self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),4)
             self.w.show()
         else:
             #No ha dado en ni un radioButton o no ha puesto el nombre o no ha hecho ninguno de los dos 

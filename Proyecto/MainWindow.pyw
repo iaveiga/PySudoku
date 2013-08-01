@@ -5,12 +5,10 @@ from Juego import Juego
 import cPickle
 
 class MainWindow(QtGui.QMainWindow):
-    def __init__(self,parent = None):
-        QtGui.QWidget.__init__(self,parent)
+    def __init__(self):
+        QtGui.QWidget.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        
-        self.game = None
 
     #Accion al momento de dar click en el boton Guardar
     def Guardar(path):
@@ -59,6 +57,23 @@ class MainWindow(QtGui.QMainWindow):
         ob = cPickle.load(file_)
         self.game = ob
 
+    #Intercambio de Datos de la Ventana Inicio a la ventana MainWindow
+    def SetDatosPrincipales(self,jugador_nombre,value):
+        self.ui.txt_jugador.setText(jugador_nombre);
+        if value==1:
+            self.ui.txt_nivel.setText("Facil")
+            print"facil"
+        elif value== 2:
+            self.ui.txt_nivel.setText("Normal")
+            print"Normal"
+        elif value== 3:
+            self.ui.txt_nivel.setText("Avanzado")
+            print"Avanzado"
+        else:
+             self.ui.txt_nivel.setText("Experto")
+             print"Experto"
+        
+    
 if __name__=="__main__":
     app = QtGui.QApplication(sys.argv)
     myapp = MainWindow()
