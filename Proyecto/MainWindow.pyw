@@ -9,7 +9,7 @@ class MainWindow(QtGui.QMainWindow):
         QtGui.QWidget.__init__(self,parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
+        
         self.game = None
 
     #Accion al momento de dar click en el boton Guardar
