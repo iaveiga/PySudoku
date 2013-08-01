@@ -40,12 +40,7 @@ class MainWindow(QtGui.QMainWindow):
                 value = self.game.juego.getCell(i,j).getValue()
                 if value != 0:
                     c.setText(str(value))
-
                 self.ui.gridLayout.addWidget(c,i,j)
-                self.ui.txt_jugador.setText(str(name))
-                self.ui.txt_nivel.setText(str(dif))
-
-
 
     def saveGame(path):
         file_ = open(path,"wb")
@@ -63,15 +58,19 @@ class MainWindow(QtGui.QMainWindow):
         if value==1:
             self.ui.txt_nivel.setText("Facil")
             print"facil"
+            self.loadNew(jugador_nombre,1)
         elif value== 2:
             self.ui.txt_nivel.setText("Normal")
             print"Normal"
+            self.loadNew(jugador_nombre,2)
         elif value== 3:
             self.ui.txt_nivel.setText("Avanzado")
             print"Avanzado"
+            self.loadNew(jugador_nombre,3)
         else:
              self.ui.txt_nivel.setText("Experto")
              print"Experto"
+             self.loadNew(jugador_nombre,4)
         
     
 if __name__=="__main__":
