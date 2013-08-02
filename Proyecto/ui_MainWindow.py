@@ -85,8 +85,8 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuArchivo.menuAction())
 
         self.retranslateUi(MainWindow)
-        QtCore.QObject.connect(self.btn_Guardar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.Guardar)
-        QtCore.QObject.connect(self.btn_Verificar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.Verificar)
+        QtCore.QObject.connect(self.btn_Guardar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.guardar)
+        QtCore.QObject.connect(self.btn_Verificar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.verificar)
         QtCore.QObject.connect(self.actionSALIR, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.Salir)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

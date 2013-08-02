@@ -89,6 +89,9 @@ class Generator():
             casillas = random.randint(28,31)
         else:
             casillas = random.randint(23,27)
+            
+        casillas = 81 - casillas
+        
         while (i < casillas):
 
             pos = int(random.randint(0, 80))

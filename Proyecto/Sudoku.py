@@ -60,7 +60,7 @@ class Sudoku(object):
     def solve(self, row = int, col = int):
         if row > 8:
             sys.exit()
-        elif self.getCell(row,col).getValue() != 0: 
+        elif self.getCell(row,col).getValue() != 0:
             self.next(row, col) #if a cell is not empty, continue next cell
         else:
             for num in range(1,10):
@@ -95,12 +95,13 @@ class Sudoku(object):
             for j in range(0,9):
                 c = Cell(i,j,board[i][j])
                 self.setCell(i,j,c)
+
     def compare(self, other):
     #retorna la listas de celdas en que other difiere de self
     #self (tablero lleno), other tablero a jugar
         li = []
         for i in range(0,9):
             for j in range(0,9):
-                if self.getCell(i,j).getValue() != other.getCell(i,j).getValue():
+                if self.getCell(i,j).getValue() == other.getCell(i,j).getValue():
                     li.append(other.getCell(i,j))
         return li

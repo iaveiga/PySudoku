@@ -77,14 +77,14 @@ class Ui_Inicio_Frame(object):
 
     def retranslateUi(self, Inicio_Frame):
         self.label.setText(_translate("Inicio_Frame", "Nombre", None))
-        self.rbt_facil.setText(_translate("Inicio_Frame", "Facil", None))
+        self.rbt_facil.setText(_translate("Inicio_Frame", "Fácil", None))
         self.rbt_normal.setText(_translate("Inicio_Frame", "Normal", None))
         self.rbt_avanzado.setText(_translate("Inicio_Frame", "Avanzado", None))
         self.rbt_experto.setText(_translate("Inicio_Frame", "Experto", None))
         self.label_2.setText(_translate("Inicio_Frame", "Dificultad", None))
         self.btn_Jugar.setText(_translate("Inicio_Frame", "Jugar", None))
         self.btn_cargar.setText(_translate("Inicio_Frame", "Cargar Partida", None))
-        self.btn_estadisticas.setText(_translate("Inicio_Frame", "Estadisticas", None))
+        self.btn_estadisticas.setText(_translate("Inicio_Frame", "Estadísticas", None))
         self.btn_salir.setText(_translate("Inicio_Frame", "Salir", None))
         self.label_3.setText(_translate("Inicio_Frame", "PY-SUDOKU", None))
 

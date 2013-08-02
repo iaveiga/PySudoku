@@ -1,3 +1,5 @@
+# -*- coding: cp1252 -*-
+
 from PyQt4 import QtCore, QtGui
 import sys
 from ui_MainWindow import Ui_MainWindow
@@ -11,18 +13,31 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.setupUi(self)
 
     #Accion al momento de dar click en el boton Guardar
-    def Guardar(path):
-        file_ = open(path,"wb")
-        cPickle.dump(self.game,file_,protocol = 2)
-        file_.close()
+    def guardar(self):
+        path = QtGui.QFileDialog.getSaveFileName(self,'Save File', '.sudo')
+        if path != "":
+            file_ = open(path,"wb")
+            cPickle.dump(self.game,file_,protocol = 2)
+            file_.close()
 
-    def cargar(path):
-        fie_ = open(path,"rb")
-        ob = cPickle.load(file_)
-        self.game = ob
+    def cargar(self):
+        path = QtGui.QFileDialog.getOpenFileName(self,'Open File', '.sudo')
+        if path != "":
+            file_ = open(path,"rb")
+            ob = cPickle.load(file_)
+            self.game = ob
+
     #Accion al momento de dar click en el boton Verificar
-    def Verificar(self):
-        return 0
+    def verificar(self):
+        ls_error = []
+        ls_error = self.game.tablero.compare(self.game.juego)
+
+        for i in range(0,len(ls_error)):
+            x = ls_error[i].getX()
+            y = ls_error[i].getY()
+            pal = self.ui.gridLayout.itemAtPosition(x,y).widget().palette()
+            pal.setColor(QtGui.QPalette.Base, QtGui.QColor(254,155,153))
+            self.ui.gridLayout.itemAtPosition(x,y).widget().setPalette(pal)
 
     #Accion al momento de dar click en el submenu Salir
     def Salir(self):
@@ -40,23 +55,18 @@ class MainWindow(QtGui.QMainWindow):
                 value = self.game.juego.getCell(i,j).getValue()
                 if value != 0:
                     c.setText(str(value))
+                    pal =  QtGui.QPalette(c.palette())
+                    pal.setColor(QtGui.QPalette.Base,QtGui.QColor(0,204,51))
+                    c.setPalette(pal)
+                    c.setReadOnly(True)
                 self.ui.gridLayout.addWidget(c,i,j)
 
-    def saveGame(path):
-        file_ = open(path,"wb")
-        cPickle.dump(self.game,file_,protocol = 2)
-        file_.close()
-
-    def loadGame(path):
-        fie_ = open(path,"rb")
-        ob = cPickle.load(file_)
-        self.game = ob
 
     #Intercambio de Datos de la Ventana Inicio a la ventana MainWindow
     def SetDatosPrincipales(self,jugador_nombre,value):
         self.ui.txt_jugador.setText(jugador_nombre);
         if value==1:
-            self.ui.txt_nivel.setText("Facil")
+            self.ui.txt_nivel.setText("Fácil")
             print"facil"
             self.loadNew(jugador_nombre,1)
         elif value== 2:
@@ -71,12 +81,14 @@ class MainWindow(QtGui.QMainWindow):
              self.ui.txt_nivel.setText("Experto")
              print"Experto"
              self.loadNew(jugador_nombre,4)
-        
-    
+
+
 if __name__=="__main__":
     app = QtGui.QApplication(sys.argv)
     myapp = MainWindow()
     myapp.show()
     myapp.loadNew("pepe",4)
+    myapp.verificar()
+    myapp.guardar()
     sys.exit(app.exec_())
     exit(app.exec_())

@@ -17,12 +17,14 @@ class Inicio(QtGui.QMainWindow):
             self.w = MainWindow()
             self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),1)
             self.w.show()
+
         elif(self.ui.rbt_normal.isChecked() and self.ui.txt_nombre_jugador.text != ""):
             #mando a ventana MainWindow(Nombre del Jugador, Dificultad:2)
             self.setVisible(False)
             self.w = MainWindow()
             self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),2)
             self.w.show()
+
         elif(self.ui.rbt_avanzado.isChecked() and self.ui.txt_nombre_jugador.text != ""):
             #mando a ventana MainWindow(Nombre del Jugador,Dificultad:3)
             self.setVisible(False)
@@ -30,6 +32,7 @@ class Inicio(QtGui.QMainWindow):
             self.w = MainWindow()
             self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),3)
             self.w.show()
+
         elif(self.ui.rbt_experto.isChecked() and self.ui.txt_nombre_jugador.text != ""):
             #mando a ventana MainWindow(Nombre del Jugador,Dificultad:4)
             self.setVisible(False)
@@ -37,13 +40,14 @@ class Inicio(QtGui.QMainWindow):
             self.w = MainWindow()
             self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),4)
             self.w.show()
+
         else:
-            #No ha dado en ni un radioButton o no ha puesto el nombre o no ha hecho ninguno de los dos 
+            #No ha dado en ni un radioButton o no ha puesto el nombre o no ha hecho ninguno de los dos
             print"Faltan campos a completar"
 
     def Salir(self):
         sys.exit(0)
-        
+
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     myapp = Inicio()
