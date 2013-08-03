@@ -8,7 +8,7 @@ class Juego(object):
         self.nombre = nombre
         self.dif = dif
         self.time = 0
-        self.hints = 5
+        self.hints = 25
         self.juego = Sudoku() #tablero a jugar
         self.tablero = Sudoku()   #tablero lleno
         self.create(dif)
@@ -19,8 +19,8 @@ class Juego(object):
         self.tablero.parse(g.board)
         g.gen_puzzle(dif)
         self.juego.parse(g.puzzle)
-        
-        
+
+
 
 
 

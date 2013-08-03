@@ -49,14 +49,19 @@ class MainWindow(QtGui.QMainWindow):
         #obtiene las celdas erróneas y las pinta de color (254,155,153)
         ls_error = []
         ls_error = self.game.tablero.compare(self.game.juego)
-
-        print len(ls_error)
-
         for i in range(0,len(ls_error)):
             x = ls_error[i].getX()
             y = ls_error[i].getY()
-            color = QtGui.QColor(254,155,153)
-            self.pintar(x,y,color)
+            print ls_error[i].getValue()
+            if ls_error[i].getValue != 0:
+                color = QtGui.QColor(254,155,153)
+                self.pintar(x,y,color)
+
+        if len(ls_error) == 0:
+            for i in range(0,9):
+                for j in range(0,9):
+                    self.ui.gridLayout.itemAtPosition(i,j).widget().setEnabled(False)
+            print "Ganó"
 
     def pintar(self,x = int, y = int, color = QtGui.QColor):
         pal = self.ui.gridLayout.itemAtPosition(x,y).widget().palette()
@@ -68,7 +73,6 @@ class MainWindow(QtGui.QMainWindow):
         sys.exit(0)
 
     def loadNew(self, name = str, dif = int):
-        #Falta pintar de color distinto
         self.game = Juego(name, dif)
         for i in range(9):
             for j in range(9):
