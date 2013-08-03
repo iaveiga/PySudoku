@@ -5,6 +5,7 @@ import sys
 from ui_MainWindow import Ui_MainWindow
 from Juego import Juego
 import cPickle
+import random
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -42,10 +43,8 @@ class MainWindow(QtGui.QMainWindow):
             for j in range(0,9):
                 val = self.ui.gridLayout.itemAtPosition(i,j).widget().isEnabled() #Si el qlineedit xy está habilitado se pinta de blanco
                 if val:
-                    pal = self.ui.gridLayout.itemAtPosition(i,j).widget().palette()
-                    pal.setColor(QtGui.QPalette.Base, QtGui.QColor('White'))
-                    self.ui.gridLayout.itemAtPosition(i,j).widget().setPalette(pal)
-
+                    color = QtGui.QColor("White")
+                    self.pintar(i,j,color)
 
         #obtiene las celdas erróneas y las pinta de color (254,155,153)
         ls_error = []
@@ -56,10 +55,13 @@ class MainWindow(QtGui.QMainWindow):
         for i in range(0,len(ls_error)):
             x = ls_error[i].getX()
             y = ls_error[i].getY()
-            pal = self.ui.gridLayout.itemAtPosition(x,y).widget().palette()
-            pal.setColor(QtGui.QPalette.Base, QtGui.QColor(254,155,153))
-            self.ui.gridLayout.itemAtPosition(x,y).widget().setPalette(pal)
+            color = QtGui.QColor(254,155,153)
+            self.pintar(x,y,color)
 
+    def pintar(self,x = int, y = int, color = QtGui.QColor):
+        pal = self.ui.gridLayout.itemAtPosition(x,y).widget().palette()
+        pal.setColor(QtGui.QPalette.Base,QtGui.QColor(color))
+        self.ui.gridLayout.itemAtPosition(x,y).widget().setPalette(pal)
 
     #Accion al momento de dar click en el submenu Salir
     def Salir(self):
@@ -75,17 +77,18 @@ class MainWindow(QtGui.QMainWindow):
                 c.setInputMask("0")
                 c.setFixedSize(30,30)
                 value = self.game.juego.getCell(i,j).getValue()
+                flag = 0
+                color = QtGui.QColor("White")
                 if value != 0:
                     c.setText(str(value))
-                    pal =  QtGui.QPalette(c.palette())
-                    pal.setColor(QtGui.QPalette.Base,QtGui.QColor(0,204,51))
-                    c.setPalette(pal)
+                    flag = 1
                     c.setEnabled(False)
-                    #c.setReadOnly(True)
+                if flag == 1:
+                    color = QtGui.QColor(0,204,51)
                 self.ui.gridLayout.addWidget(c,i,j)
+                self.pintar(i,j,color)
         self.ui.txt_jugador.setText(name)
         self.ui.txt_nivel.setText(str(dif))
-
 
     #Intercambio de Datos de la Ventana Inicio a la ventana MainWindow
     def SetDatosPrincipales(self,jugador_nombre,value):
@@ -107,12 +110,29 @@ class MainWindow(QtGui.QMainWindow):
              print"Experto"
              self.loadNew(jugador_nombre,4)
 
+    def ayuda(self):
+        if self.game.hints > 0:
+            x = random.randint(0,8)
+            y = random.randint(0,8)
+            while not self.ui.gridLayout.itemAtPosition(x,y).widget().isEnabled():
+                x = random.randint(0,8)
+                y = random.randint(0,8)
+            val = self.game.tablero.getCell(x,y).getValue()
+            self.game.juego.getCell(x,y).setValue(val)
+            self.ui.gridLayout.itemAtPosition(x,y).widget().setText(str(val))
+            self.ui.gridLayout.itemAtPosition(x,y).widget().setEnabled(False)
+            color = QtGui.QColor(0,255,204)
+            self.pintar(x,y,color)
+            self.game.hints -= 1
+        if self.game.hints == 0:
+            self.ui.btn_Ayuda.setEnabled(False)
+
 
 if __name__=="__main__":
     app = QtGui.QApplication(sys.argv)
     myapp = MainWindow()
     myapp.show()
     myapp.loadNew("pepe",1)
-    #myapp.verificar()
     sys.exit(app.exec_())
     exit(app.exec_())
+

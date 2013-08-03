@@ -48,6 +48,10 @@ class Ui_MainWindow(object):
         self.btn_Guardar = QtGui.QPushButton(self.centralwidget)
         self.btn_Guardar.setGeometry(QtCore.QRect(720, 220, 75, 23))
         self.btn_Guardar.setObjectName(_fromUtf8("btn_Guardar"))
+        self.btn_Ayuda = QtGui.QPushButton(self.centralwidget)
+        self.btn_Ayuda.setGeometry(QtCore.QRect(720, 300,75,23))
+        self.btn_Ayuda.setObjectName(_fromUtf8("btn_Ayuda"))
+
         self.lbl_jugador = QtGui.QLabel(self.centralwidget)
         self.lbl_jugador.setGeometry(QtCore.QRect(680, 110, 46, 13))
         self.lbl_jugador.setObjectName(_fromUtf8("lbl_jugador"))
@@ -88,6 +92,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.btn_Guardar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.guardar)
         QtCore.QObject.connect(self.btn_Verificar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.verificar)
         QtCore.QObject.connect(self.actionSALIR, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.Salir)
+        QtCore.QObject.connect(self.btn_Ayuda,QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.ayuda)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -97,6 +102,7 @@ class Ui_MainWindow(object):
         self.lbl_jugador.setText(_translate("MainWindow", "Jugador:", None))
         self.label2.setText(_translate("MainWindow", "Nivel de Juego: ", None))
         self.btn_Verificar.setText(_translate("MainWindow", "Verificar", None))
+        self.btn_Ayuda.setText(_translate("MainWindow","Ayuda",None))
         self.menuArchivo.setTitle(_translate("MainWindow", "Archivo", None))
         self.actionGuardar.setText(_translate("MainWindow", "Guardar", None))
         self.actionSALIR.setText(_translate("MainWindow", "Salir", None))

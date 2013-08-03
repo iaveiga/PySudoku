@@ -8,6 +8,7 @@ class Juego(object):
         self.nombre = nombre
         self.dif = dif
         self.time = 0
+        self.hints = 5
         self.juego = Sudoku() #tablero a jugar
         self.tablero = Sudoku()   #tablero lleno
         self.create(dif)
