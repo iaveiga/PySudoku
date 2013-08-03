@@ -61,6 +61,10 @@ class MainWindow(QtGui.QMainWindow):
             for i in range(0,9):
                 for j in range(0,9):
                     self.ui.gridLayout.itemAtPosition(i,j).widget().setEnabled(False)
+            if self.game.hints == 25:
+                text, ok = QtGui.QInputDialog.getText(self,'PySudoku','Ingresa tu nombre: ')
+                if ok:
+                    print text
             print "Ganó"
 
     def pintar(self,x = int, y = int, color = QtGui.QColor):
