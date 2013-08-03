@@ -8,7 +8,8 @@ class Cell(object):
         self.__x = x
         self.__y = y
         self.__value = value
-
+        self.__occupied = False
+        
     #Getters
     def getX(self):
         return self.__x
@@ -19,6 +20,9 @@ class Cell(object):
     def getValue(self):
         return self.__value
 
+    def getOccupied(self):
+        return self.__occupied
+    
     #Setters
     def setX(self, x):
         self.__x = x
@@ -29,6 +33,8 @@ class Cell(object):
     def setValue(self, value):
         self.__value = value
 
+    def setOccupied(self, occupied):
+        self.__occupied = occupied
     
     def equals(self, other):
         return self.__x == other.getX() and self.__y == other.getY() and self.__value == other.getValue()
@@ -36,13 +42,3 @@ class Cell(object):
     def printC(self):
         print "x: ", self.__x , " , y:", self.__y, " , v: ", self.__value
 
-    def save(self):
-        f = open("save.sudo","wb")
-        cPickle.dump(self,f,protocol = 2)
-        f.close()
-                 
-    def load(self):
-        f = open("save.sudo","rb")
-        ob = cPickle.load(f)
-        f.close()
-        return (ob)

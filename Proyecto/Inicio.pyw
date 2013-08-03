@@ -37,13 +37,19 @@ class Inicio(QtGui.QMainWindow):
             #mando a ventana MainWindow(Nombre del Jugador,Dificultad:4)
             self.setVisible(False)
             self.w = MainWindow()
-            self.w = MainWindow()
             self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),4)
             self.w.show()
 
         else:
             #No ha dado en ni un radioButton o no ha puesto el nombre o no ha hecho ninguno de los dos
             print"Faltan campos a completar"
+
+    def Cargar(self):
+        self.w = MainWindow()
+        self.w.loadNew(" ", 0, True)
+        self.setVisible(False)
+        self.w.show()
+        print "loaded"
 
     def Salir(self):
         sys.exit(0)

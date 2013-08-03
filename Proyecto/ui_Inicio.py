@@ -73,6 +73,7 @@ class Ui_Inicio_Frame(object):
         self.retranslateUi(Inicio_Frame)
         QtCore.QObject.connect(self.btn_salir, QtCore.SIGNAL(_fromUtf8("clicked()")), Inicio_Frame.Salir)
         QtCore.QObject.connect(self.btn_Jugar, QtCore.SIGNAL(_fromUtf8("clicked()")), Inicio_Frame.Jugar)
+        QtCore.QObject.connect(self.btn_cargar, QtCore.SIGNAL(_fromUtf8("clicked()")), Inicio_Frame.Cargar)
         QtCore.QMetaObject.connectSlotsByName(Inicio_Frame)
 
     def retranslateUi(self, Inicio_Frame):

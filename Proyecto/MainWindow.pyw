@@ -12,11 +12,13 @@ class MainWindow(QtGui.QMainWindow):
         QtGui.QWidget.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.crear() #crea el esqueleto vacío
 
     #Accion al momento de dar click en el boton Guardar
     def guardar(self):
         path = QtGui.QFileDialog.getSaveFileName(self,'Save File', '.sudo')
         if path != "":
+            self.parse()
             file_ = open(path,"wb")
             cPickle.dump(self.game,file_,protocol = 2)
             file_.close()
@@ -28,15 +30,18 @@ class MainWindow(QtGui.QMainWindow):
             ob = cPickle.load(file_)
             self.game = ob
 
-
-    def verificar(self):
-        #Parsea los valores de la interfaz al tablero juego (correctamente)
+    def parse(self):
+        #Pasa los valores de la interfaz gráfica al Sudoku juego.
         for i in range(0,9):
             for j in range(0,9):
                 if self.ui.gridLayout.itemAtPosition(i,j).widget().isEnabled():
                     val = self.ui.gridLayout.itemAtPosition(i,j).widget().text()
                     val = val.toInt(base = 10)[0]
                     self.game.juego.getCell(i,j).setValue(val)
+
+    def verificar(self):
+        #Parsea los valores de la interfaz al tablero juego (correctamente)
+        self.parse()
 
         #Pinta las celdas jugadas por defecto (blanco)
         for i in range(0,9):
@@ -57,6 +62,7 @@ class MainWindow(QtGui.QMainWindow):
                 color = QtGui.QColor(254,155,153)
                 self.pintar(x,y,color)
 
+        #Ganó
         if len(ls_error) == 0:
             for i in range(0,9):
                 for j in range(0,9):
@@ -76,47 +82,56 @@ class MainWindow(QtGui.QMainWindow):
     def Salir(self):
         sys.exit(0)
 
-    def loadNew(self, name = str, dif = int):
-        self.game = Juego(name, dif)
-        for i in range(9):
-            for j in range(9):
+    def crear(self):
+        for i in range(0,9):
+            for j in range(0,9):
                 c = QtGui.QLineEdit()
                 c.setMaxLength(1)
                 c.setInputMask("0")
                 c.setFixedSize(30,30)
+                self.ui.gridLayout.addWidget(c,i,j)
+
+    def loadNew(self, name = str, dif = int, saved = bool):
+        #Pasa los valores de un nuevo
+        if not saved:   #Si no está guardado crea un nuevo juego
+            self.game = Juego(name, dif)
+            self.game.nombre = name
+            self.game.dif = dif
+        else:   #Si está guardado carga el juego
+            self.cargar()
+
+        #Recorre el tablero a jugar y pasa los valores a la interfaz
+        for i in range(9):
+            for j in range(9):
                 value = self.game.juego.getCell(i,j).getValue()
                 flag = 0
                 color = QtGui.QColor("White")
-                if value != 0:
-                    c.setText(str(value))
-                    flag = 1
-                    c.setEnabled(False)
+                if value != 0: #Si es una celda no ocupada
+                    self.ui.gridLayout.itemAtPosition(i,j).widget().setText(str(value)) #pasa el valor a la interfaz
+                    if self.game.juego.getCell(i,j).getOccupied():
+                        flag = 1
+                        self.ui.gridLayout.itemAtPosition(i,j).widget().setEnabled(False)
                 if flag == 1:
                     color = QtGui.QColor(0,204,51)
-                self.ui.gridLayout.addWidget(c,i,j)
                 self.pintar(i,j,color)
-        self.ui.txt_jugador.setText(name)
-        self.ui.txt_nivel.setText(str(dif))
+        self.ui.txt_jugador.setText(self.game.nombre)
+        self.ui.txt_nivel.setText(str(self.game.dif))
 
     #Intercambio de Datos de la Ventana Inicio a la ventana MainWindow
     def SetDatosPrincipales(self,jugador_nombre,value):
         self.ui.txt_jugador.setText(jugador_nombre);
         if value==1:
             self.ui.txt_nivel.setText("Fácil")
-            print"facil"
-            self.loadNew(jugador_nombre,1)
+            self.loadNew(jugador_nombre,1, False)
         elif value== 2:
             self.ui.txt_nivel.setText("Normal")
-            print"Normal"
-            self.loadNew(jugador_nombre,2)
+            self.loadNew(jugador_nombre,2, False)
         elif value== 3:
             self.ui.txt_nivel.setText("Avanzado")
-            print"Avanzado"
-            self.loadNew(jugador_nombre,3)
+            self.loadNew(jugador_nombre,3, False)
         else:
              self.ui.txt_nivel.setText("Experto")
-             print"Experto"
-             self.loadNew(jugador_nombre,4)
+             self.loadNew(jugador_nombre,4, False)
 
     def ayuda(self):
         if self.game.hints > 0:
@@ -136,11 +151,13 @@ class MainWindow(QtGui.QMainWindow):
             self.ui.btn_Ayuda.setEnabled(False)
 
 
+
+'''
 if __name__=="__main__":
     app = QtGui.QApplication(sys.argv)
     myapp = MainWindow()
     myapp.show()
-    myapp.loadNew("pepe",1)
     sys.exit(app.exec_())
     exit(app.exec_())
+'''
 

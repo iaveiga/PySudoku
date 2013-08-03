@@ -94,6 +94,8 @@ class Sudoku(object):
         for i in range(0,9):
             for j in range(0,9):
                 c = Cell(i,j,board[i][j])
+                if board[i][j] != 0:
+                    c.setOccupied(True)
                 self.setCell(i,j,c)
 
     def compare(self, other):
