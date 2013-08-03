@@ -102,6 +102,6 @@ class Sudoku(object):
         li = []
         for i in range(0,9):
             for j in range(0,9):
-                if self.getCell(i,j).getValue() == other.getCell(i,j).getValue():
+                if self.getCell(i,j).getValue() != other.getCell(i,j).getValue():
                     li.append(other.getCell(i,j))
         return li

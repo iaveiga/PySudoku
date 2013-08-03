@@ -15,9 +15,10 @@ class Juego(object):
     def create(self, dif = int):
         g = Generator()
         g.poblar_board()
+        self.tablero.parse(g.board)
         g.gen_puzzle(dif)
         self.juego.parse(g.puzzle)
-        self.juego.parse(g.board)
+        
         
 
 
