@@ -28,8 +28,9 @@ class MainWindow(QtGui.QMainWindow):
             El objeto se serializa y se almacena en un archivo .sudo .
             @author Iván Aveiga
         """
-        self.timer.stop()
-        self.game.time =  #aquí pon int( valor del timer en segundos)
+        self.StopTimer()
+        self.game.time = self.getTime()
+        print(self.game.time)
         path = QtGui.QFileDialog.getSaveFileName(self,'Save File', '.sudo')
         if path != "":
             self.parse()
@@ -63,26 +64,26 @@ class MainWindow(QtGui.QMainWindow):
 
     #CRONOMETRO
         #inicializando el cronometro
-    def InitTimer(self):
-        self.ss=0
-        self.mm=0
+    def InitTimer(self,seg):
+        self.ss = seg
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.count)
         self.timer.start(1000)
-        self.time_n= str(self.mm)+ ":" + str(self.ss)
+        self.time_n= str(self.ss/60)+ ":" + str(self.ss%60)
         self.ui.lcdNumber.display(self.time_n)
 
     def count(self):
         self.ss = self.ss + 1
-        if self.ss > 59:
-            self.ss = 0
-            self.mm= self.mm +1
-        self.time_n= str(self.mm)+ ":" + str(self.ss)
+        self.time_n= str(self.ss/60)+ ":" + str(self.ss%60)
         self.ui.lcdNumber.display(self.time_n)
         self.ui.lcdNumber.show()
 
     def StopTimer(self):
         self.timer.stop()
+
+    def getTime(self):
+        return(self.ss)
+        print(self.ss)
 
     def verificar(self):
         """
@@ -180,9 +181,10 @@ class MainWindow(QtGui.QMainWindow):
             self.game = Juego(name, dif)
             self.game.nombre = name
             self.game.dif = dif
-            self.InitTimer()
+            self.InitTimer(0)
         else:   
             self.cargar()
+            self.InitTimer(self.game.time)
 
         """
             Pasa los valores a la interfaz, las celdas a no jugar(celdas por defecto) son
