@@ -39,6 +39,26 @@ class MainWindow(QtGui.QMainWindow):
                     val = val.toInt(base = 10)[0]
                     self.game.juego.getCell(i,j).setValue(val)
 
+    #CRONOMETRO
+        #inicializando el cronometro
+    def InitTimer(self):
+        self.ss=0
+        self.mm=0
+        self.timer = QtCore.QTimer()
+        self.ui.lcdNumber.connect(self.timer,QtCore.SIGNAL("self.timer.timeout()"),self.ui.lcdNumber,QtCore.SLOT("self.count()"))
+        self.timer.start(1000)
+        self.time_n= str(self.mm)+ ":" + str(self.ss)
+        self.ui.lcdNumber.display(self.time_n)
+    
+    def count(self):
+        self.ss = self.ss + 1
+        if self.ss > 59:
+            self.ss = 0
+            self.mm= self.m+1
+        self.time_n= str(self.mm)+ ":" + str(self.ss)
+        self.ui.lcdNumber.display(self.time_n)
+        self.ui.lcdNumber.show()
+            
     def verificar(self):
         #Parsea los valores de la interfaz al tablero juego (correctamente)
         self.parse()
@@ -99,6 +119,7 @@ class MainWindow(QtGui.QMainWindow):
             self.game = Juego(name, dif)
             self.game.nombre = name
             self.game.dif = dif
+            self.InitTimer()
         else:   #Si está guardado carga el juego
             self.cargar()
 
