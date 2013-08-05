@@ -45,7 +45,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ss=0
         self.mm=0
         self.timer = QtCore.QTimer()
-        self.ui.lcdNumber.connect(self.timer,QtCore.SIGNAL("self.timer.timeout()"),self.ui.lcdNumber,QtCore.SLOT("self.count()"))
+        self.timer.timeout.connect(self.count)
         self.timer.start(1000)
         self.time_n= str(self.mm)+ ":" + str(self.ss)
         self.ui.lcdNumber.display(self.time_n)
@@ -58,6 +58,9 @@ class MainWindow(QtGui.QMainWindow):
         self.time_n= str(self.mm)+ ":" + str(self.ss)
         self.ui.lcdNumber.display(self.time_n)
         self.ui.lcdNumber.show()
+        
+    def StopTimer(self):
+        self.timer.stop()
             
     def verificar(self):
         #Parsea los valores de la interfaz al tablero juego (correctamente)
