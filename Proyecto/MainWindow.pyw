@@ -115,7 +115,7 @@ class MainWindow(QtGui.QMainWindow):
             -Se obtiene la lista de celdas erróneas y se pintan de otro color.
             -Si no hay celdas en blanco y si no hay celdas erróneas el jugador ganó el juego.
             -Si no usó ayudas y dependiendo del tiempo ingresa al ranking.
-            @author Iván Aveiga.            
+            @author Iván Aveiga.
         """
         self.parse()
         cont = 0
@@ -129,7 +129,7 @@ class MainWindow(QtGui.QMainWindow):
                     self.pintar(i,j,color)
                     if val not in [1,2,3,4,5,6,7,8,9]:
                         cont += 1
-                        
+
         ls_error = self.game.tablero.compare(self.game.juego)
         for i in range(0,len(ls_error)):
             x = ls_error[i].getX()
@@ -138,6 +138,7 @@ class MainWindow(QtGui.QMainWindow):
             self.pintar(x,y,color)
 
         if len(ls_error) == 0 and cont == 0:
+            self.timer.stop()
             for i in range(0,9):
                 for j in range(0,9):
                     self.ui.gridLayout.itemAtPosition(i,j).widget().setEnabled(False)
@@ -145,6 +146,15 @@ class MainWindow(QtGui.QMainWindow):
             ayuda = str(5 - self.game.hints)
             msg = "Felicitaciones " + nombre + " \nGanaste usando " + ayuda + " ayudas."
             resp = QtGui.QMessageBox.information(self, "PySudoku", msg, QtGui.QMessageBox.Ok)
+            if self.game.hints == 5:
+                time = self.getTime()
+                resp_ = self.setRanking(str(nombre), time)
+                if resp_:
+                    msg = "Felicitaciones " + nombre + " \nAcabas de entrar al ranking.!!"
+                    resp = QtGui.QMessageBox.information(self, "PySudoku", msg, QtGui.QMessageBox.Ok)
+
+
+
 
     def pintar(self,x = int, y = int, color = QtGui.QColor):
         """
@@ -152,27 +162,47 @@ class MainWindow(QtGui.QMainWindow):
             @param x, coordenada en x del qlineedit.
             @param y, coordenada en y del qlineedit.
             @param color, color a setear.
-            @author Iván Aveiga.            
+            @author Iván Aveiga.
         """
         pal = self.ui.gridLayout.itemAtPosition(x,y).widget().palette()
         pal.setColor(QtGui.QPalette.Base,QtGui.QColor(color))
         self.ui.gridLayout.itemAtPosition(x,y).widget().setPalette(pal)
 
-    def inRanking(self):
-        return 0
+    def setRanking(self, name = str, time = int):
+        flag = False
+        file_ = open("stats.txt","r")
+        lines = file_.readlines()
+        line = name + "," + str(time) + "\n"
+        file_.close()
+
+        for i in range(0,len(lines)):
+            l = lines[i].rstrip("\n").split(",")
+            if time < int(l[1]):
+                lines[i] = line
+                flag = True
+                break
+        for i in range(0,len(lines)):
+            print lines[i]
+
+        f = open("stats.txt","w")
+        f.writelines(lines)
+        f.close()
+
+        return flag
+
 
     def Salir(self):
         """
             Sale de la aplicación.
             @author Kevin Campuzano.
-        """ 
+        """
         sys.exit(0)
 
     def crear(self):
         """
             Añade 9x9 qlineedit en un Gridlayout a jugar con la configuración de longitud,
             valores soportados, tamaño.
-            @author Iván Aveiga            
+            @author Iván Aveiga
         """
         for i in range(0,9):
             for j in range(0,9):
@@ -191,16 +221,16 @@ class MainWindow(QtGui.QMainWindow):
             @author Iván Aveiga.
             @author Kevin Campuzano.
         """
-        
+
         """
             Si no es un juego guardado crea un nuevo juego
         """
-        if not saved:   
+        if not saved:
             self.game = Juego(name, dif)
             self.game.nombre = name
             self.game.dif = dif
             self.InitTimer(0)
-        else:   
+        else:
             self.cargar()
             self.InitTimer(self.game.time)
 
