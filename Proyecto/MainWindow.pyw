@@ -73,6 +73,7 @@ class MainWindow(QtGui.QMainWindow):
             for j in range(0,9):
                 habilitado = self.ui.gridLayout.itemAtPosition(i,j).widget().isEnabled() #Si el qlineedit xy está habilitado se pinta de blanco
                 val = self.ui.gridLayout.itemAtPosition(i,j).widget().text()
+                val = val.toInt(base = 10)[0]
                 if habilitado:
                     color = QtGui.QColor("White")
                     self.pintar(i,j,color)
@@ -87,7 +88,8 @@ class MainWindow(QtGui.QMainWindow):
             color = QtGui.QColor(254,155,153)
             self.pintar(x,y,color)
 
-
+        print len(ls_error)
+        print cont
         if len(ls_error) == 0 and cont == 0:
             for i in range(0,9):
                 for j in range(0,9):
