@@ -1,3 +1,4 @@
+# -*- coding: cp1252 -*-
 from PyQt4 import QtCore, QtGui
 import sys
 from ui_Inicio import Ui_Inicio_Frame
@@ -9,6 +10,24 @@ class Inicio(QtGui.QMainWindow):
         QtGui.QWidget.__init__(self)
         self.ui = Ui_Inicio_Frame()
         self.ui.setupUi(self)
+
+    def Stats(self):
+        """
+            Muestra las estadísticas en un informationBox.
+            No se muestra el nivel en que se resolvió el Sudoku.
+            Se muestra en el formato minutos:segundos.
+            @author Iván Aveiga.
+        """
+        file_= open("stats.txt","r")
+        lines = file_.readlines()
+        msg = ""
+        for i in range(0,len(lines)):
+            aux = lines[i].rstrip("\n").split(",")
+            t = int(aux[1])
+            time = "(" + str(t/60) + " : " + str(t %60) + ")"
+            msg = msg + aux[0] + "\n" + time + "\n \n"
+        file_.close()
+        rs = QtGui.QMessageBox.information(self, "Rankings",  msg, QtGui.QMessageBox.Ok)
 
     def Jugar(self):
         if(self.ui.rbt_facil.isChecked() and self.ui.txt_nombre_jugador.text() != ""):
