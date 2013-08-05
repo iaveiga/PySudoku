@@ -18,12 +18,6 @@ class Sudoku(object):
     def setCell(self, i = int, j = int, c = Cell):
         self.matrix[i][j] = c
 
-    def printS(self):
-        for i in range(0,9):
-            for j in range(0,9):
-                print self.matrix[i][j].getValue() , "\t "
-            print "\n"
-
     def getCell(self, i = int ,j = int):
         return self.matrix[i][j]
 
@@ -75,16 +69,6 @@ class Sudoku(object):
     def solveAll(self):
         self.solve(0,0)
 
-    def load(self):
-        f = open("C:/s1.txt","r")
-        lines = f.readlines()
-        for i in range(0,9):
-            p = lines[i].lstrip()
-            for j in range(0,9):
-                c = Cell(i,j,int(p[j]))
-                self.setCell(i,j,c)
-        f.close()
-
     def cleanBoard(self):
         for i in range(0,9):
             for j in range(0,9):
@@ -100,10 +84,12 @@ class Sudoku(object):
 
     def compare(self, other):
     #retorna la listas de celdas en que other difiere de self
-    #self (tablero lleno), other tablero a jugar
+    #self (tablero lleno), other tablero a jugar, solo compara las celdas con contenido en el tablero other
         li = []
         for i in range(0,9):
             for j in range(0,9):
-                if self.getCell(i,j).getValue() != other.getCell(i,j).getValue():
-                    li.append(other.getCell(i,j))
+                if int(other.getCell(i,j).getValue()) != 0:
+                    if self.getCell(i,j).getValue() != other.getCell(i,j).getValue():
+                        li.append(other.getCell(i,j))
+                        other.getCell(i,j).printC()
         return li

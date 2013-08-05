@@ -49,7 +49,6 @@ class Inicio(QtGui.QMainWindow):
         self.w.loadNew(" ", 0, True)
         self.setVisible(False)
         self.w.show()
-        print "loaded"
 
     def Salir(self):
         sys.exit(0)

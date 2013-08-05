@@ -87,7 +87,6 @@ class Ui_MainWindow(object):
         self.menuArchivo.addSeparator()
         self.menuArchivo.addAction(self.actionSALIR)
         self.menubar.addAction(self.menuArchivo.menuAction())
-
         self.retranslateUi(MainWindow)
         QtCore.QObject.connect(self.btn_Guardar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.guardar)
         QtCore.QObject.connect(self.btn_Verificar, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.verificar)

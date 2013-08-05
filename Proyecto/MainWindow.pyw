@@ -43,40 +43,42 @@ class MainWindow(QtGui.QMainWindow):
         #Parsea los valores de la interfaz al tablero juego (correctamente)
         self.parse()
 
+        flag = False
         #Pinta las celdas jugadas por defecto (blanco)
         for i in range(0,9):
             for j in range(0,9):
                 val = self.ui.gridLayout.itemAtPosition(i,j).widget().isEnabled() #Si el qlineedit xy está habilitado se pinta de blanco
+                flag = True
                 if val:
                     color = QtGui.QColor("White")
                     self.pintar(i,j,color)
 
         #obtiene las celdas erróneas y las pinta de color (254,155,153)
-        ls_error = []
         ls_error = self.game.tablero.compare(self.game.juego)
         for i in range(0,len(ls_error)):
             x = ls_error[i].getX()
             y = ls_error[i].getY()
-            print ls_error[i].getValue()
-            if ls_error[i].getValue != 0:
-                color = QtGui.QColor(254,155,153)
-                self.pintar(x,y,color)
+            color = QtGui.QColor(254,155,153)
+            self.pintar(x,y,color)
 
-        #Ganó
-        if len(ls_error) == 0:
+
+        if len(ls_error) == 0 :# and flag == False:
             for i in range(0,9):
                 for j in range(0,9):
                     self.ui.gridLayout.itemAtPosition(i,j).widget().setEnabled(False)
-            if self.game.hints == 25:
-                text, ok = QtGui.QInputDialog.getText(self,'PySudoku','Ingresa tu nombre: ')
-                if ok:
-                    print text
-            print "Ganó"
+            nombre = self.game.nombre
+            ayuda = str(3 - self.game.hints)
+            msg = "Felicitaciones " + nombre + " \nGanaste usando " + ayuda + " ayudas."
+            resp = QtGui.QMessageBox.information(self, "PySudoku", msg, QtGui.QMessageBox.Ok)
 
     def pintar(self,x = int, y = int, color = QtGui.QColor):
         pal = self.ui.gridLayout.itemAtPosition(x,y).widget().palette()
         pal.setColor(QtGui.QPalette.Base,QtGui.QColor(color))
         self.ui.gridLayout.itemAtPosition(x,y).widget().setPalette(pal)
+
+    def inRanking(self):
+        #recorre el ranking
+        return 0
 
     #Accion al momento de dar click en el submenu Salir
     def Salir(self):
@@ -115,7 +117,14 @@ class MainWindow(QtGui.QMainWindow):
                     color = QtGui.QColor(0,204,51)
                 self.pintar(i,j,color)
         self.ui.txt_jugador.setText(self.game.nombre)
-        self.ui.txt_nivel.setText(str(self.game.dif))
+        if self.game.dif == 1:
+            self.ui.txt_nivel.setText("Fácil")
+        elif self.game.dif == 2:
+            self.ui.txt_nivel.setText("Normal")
+        elif self.gamee.dif == 3:
+            self.ui.txt_nivel.setText("Avanzado")
+        else:
+            self.ui.txt_nivel.setText("Experto")
 
     #Intercambio de Datos de la Ventana Inicio a la ventana MainWindow
     def SetDatosPrincipales(self,jugador_nombre,value):
@@ -149,15 +158,3 @@ class MainWindow(QtGui.QMainWindow):
             self.game.hints -= 1
         if self.game.hints == 0:
             self.ui.btn_Ayuda.setEnabled(False)
-
-
-
-'''
-if __name__=="__main__":
-    app = QtGui.QApplication(sys.argv)
-    myapp = MainWindow()
-    myapp.show()
-    sys.exit(app.exec_())
-    exit(app.exec_())
-'''
-
