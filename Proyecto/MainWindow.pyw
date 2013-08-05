@@ -54,7 +54,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ss = self.ss + 1
         if self.ss > 59:
             self.ss = 0
-            self.mm= self.m+1
+            self.mm= self.mm +1
         self.time_n= str(self.mm)+ ":" + str(self.ss)
         self.ui.lcdNumber.display(self.time_n)
         self.ui.lcdNumber.show()
@@ -148,7 +148,7 @@ class MainWindow(QtGui.QMainWindow):
             self.ui.txt_nivel.setText("Fácil")
         elif self.game.dif == 2:
             self.ui.txt_nivel.setText("Normal")
-        elif self.gamee.dif == 3:
+        elif self.game.dif == 3:
             self.ui.txt_nivel.setText("Avanzado")
         else:
             self.ui.txt_nivel.setText("Experto")
