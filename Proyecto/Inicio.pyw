@@ -11,21 +11,21 @@ class Inicio(QtGui.QMainWindow):
         self.ui.setupUi(self)
 
     def Jugar(self):
-        if(self.ui.rbt_facil.isChecked() and self.ui.txt_nombre_jugador.text != ""):
+        if(self.ui.rbt_facil.isChecked() and self.ui.txt_nombre_jugador.text() != ""):
             #mando a ventana MainWindow(nombre del Jugador ,Dificultad:1)
             self.setVisible(False)
             self.w = MainWindow()
             self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),1)
             self.w.show()
 
-        elif(self.ui.rbt_normal.isChecked() and self.ui.txt_nombre_jugador.text != ""):
+        elif(self.ui.rbt_normal.isChecked() and self.ui.txt_nombre_jugador.text() != ""):
             #mando a ventana MainWindow(Nombre del Jugador, Dificultad:2)
             self.setVisible(False)
             self.w = MainWindow()
             self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),2)
             self.w.show()
 
-        elif(self.ui.rbt_avanzado.isChecked() and self.ui.txt_nombre_jugador.text != ""):
+        elif(self.ui.rbt_avanzado.isChecked() and self.ui.txt_nombre_jugador.text() != ""):
             #mando a ventana MainWindow(Nombre del Jugador,Dificultad:3)
             self.setVisible(False)
             self.w = MainWindow()
@@ -33,7 +33,7 @@ class Inicio(QtGui.QMainWindow):
             self.w.SetDatosPrincipales(self.ui.txt_nombre_jugador.text(),3)
             self.w.show()
 
-        elif(self.ui.rbt_experto.isChecked() and self.ui.txt_nombre_jugador.text != ""):
+        elif(self.ui.rbt_experto.isChecked() and self.ui.txt_nombre_jugador.text() != ""):
             #mando a ventana MainWindow(Nombre del Jugador,Dificultad:4)
             self.setVisible(False)
             self.w = MainWindow()
