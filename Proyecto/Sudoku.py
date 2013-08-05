@@ -91,5 +91,4 @@ class Sudoku(object):
                 if int(other.getCell(i,j).getValue()) != 0:
                     if self.getCell(i,j).getValue() != other.getCell(i,j).getValue():
                         li.append(other.getCell(i,j))
-                        other.getCell(i,j).printC()
         return li

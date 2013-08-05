@@ -49,7 +49,7 @@ class MainWindow(QtGui.QMainWindow):
         self.timer.start(1000)
         self.time_n= str(self.mm)+ ":" + str(self.ss)
         self.ui.lcdNumber.display(self.time_n)
-    
+
     def count(self):
         self.ss = self.ss + 1
         if self.ss > 59:
@@ -58,23 +58,26 @@ class MainWindow(QtGui.QMainWindow):
         self.time_n= str(self.mm)+ ":" + str(self.ss)
         self.ui.lcdNumber.display(self.time_n)
         self.ui.lcdNumber.show()
-        
+
     def StopTimer(self):
         self.timer.stop()
-            
+
     def verificar(self):
         #Parsea los valores de la interfaz al tablero juego (correctamente)
         self.parse()
 
-        flag = False
-        #Pinta las celdas jugadas por defecto (blanco)
+        #Pinta las celdas por defecto (blanco)
+        #Cuenta cuantas celdas vacías hay
+        cont = 0
         for i in range(0,9):
             for j in range(0,9):
-                val = self.ui.gridLayout.itemAtPosition(i,j).widget().isEnabled() #Si el qlineedit xy está habilitado se pinta de blanco
-                flag = True
-                if val:
+                habilitado = self.ui.gridLayout.itemAtPosition(i,j).widget().isEnabled() #Si el qlineedit xy está habilitado se pinta de blanco
+                val = self.ui.gridLayout.itemAtPosition(i,j).widget().text()
+                if habilitado:
                     color = QtGui.QColor("White")
                     self.pintar(i,j,color)
+                    if val not in [1,2,3,4,5,6,7,8,9]:
+                        cont += 1
 
         #obtiene las celdas erróneas y las pinta de color (254,155,153)
         ls_error = self.game.tablero.compare(self.game.juego)
@@ -85,7 +88,7 @@ class MainWindow(QtGui.QMainWindow):
             self.pintar(x,y,color)
 
 
-        if len(ls_error) == 0 :# and flag == False:
+        if len(ls_error) == 0 and cont == 0:
             for i in range(0,9):
                 for j in range(0,9):
                     self.ui.gridLayout.itemAtPosition(i,j).widget().setEnabled(False)

@@ -43,7 +43,6 @@ class Inicio(QtGui.QMainWindow):
         else:
             resp = QtGui.QMessageBox.critical(self, "PySudoku", "Ingrese nombre y/o seleccione dificultad", QtGui.QMessageBox.Ok)
             #No ha dado en ni un radioButton o no ha puesto el nombre o no ha hecho ninguno de los dos
-            print"Faltan campos a completar"
 
     def Cargar(self):
         self.w = MainWindow()
