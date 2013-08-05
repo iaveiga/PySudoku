@@ -9,14 +9,15 @@ import random
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
+        """
+            Constructor de la clase MainWindow.
+        """
         QtGui.QWidget.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.crear() #crea el esqueleto vacío
+        self.crear() #crea los qlineedit vacíos
 
-    #Accion al momento de dar click en el boton Guardar
     def guardar(self):
-<<<<<<< HEAD
         """
             Guarda una partida de Sudoku con lo siguiente:
             * Nombre del Jugador.
@@ -28,9 +29,7 @@ class MainWindow(QtGui.QMainWindow):
             @author Iván Aveiga
         """
         self.timer.stop()
-=======
-        self.StopTimer()
->>>>>>> 806f5b6cb3a2fb4ef7a95428e48c762a0204554c
+        self.game.time =  #aquí pon int( valor del timer en segundos)
         path = QtGui.QFileDialog.getSaveFileName(self,'Save File', '.sudo')
         if path != "":
             self.parse()
@@ -66,15 +65,19 @@ class MainWindow(QtGui.QMainWindow):
         #inicializando el cronometro
     def InitTimer(self):
         self.ss=0
+        self.mm=0
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.count)
         self.timer.start(1000)
-        self.time_n= str(self.ss/60)+ ":" + str(self.ss%60)
+        self.time_n= str(self.mm)+ ":" + str(self.ss)
         self.ui.lcdNumber.display(self.time_n)
 
     def count(self):
         self.ss = self.ss + 1
-        self.time_n= str(self.ss/60)+ ":" + str(self.ss%60)
+        if self.ss > 59:
+            self.ss = 0
+            self.mm= self.mm +1
+        self.time_n= str(self.mm)+ ":" + str(self.ss)
         self.ui.lcdNumber.display(self.time_n)
         self.ui.lcdNumber.show()
 
@@ -137,10 +140,8 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.gridLayout.itemAtPosition(x,y).widget().setPalette(pal)
 
     def inRanking(self):
-        #recorre el ranking
         return 0
 
-    #Accion al momento de dar click en el submenu Salir
     def Salir(self):
         """
             Sale de la aplicación.
@@ -163,16 +164,31 @@ class MainWindow(QtGui.QMainWindow):
                 self.ui.gridLayout.addWidget(c,i,j)
 
     def loadNew(self, name = str, dif = int, saved = bool):
-        #Pasa los valores de un nuevo
-        if not saved:   #Si no está guardado crea un nuevo juego
+        """
+            Carga los valores del juego a la interfaz gráfica.
+            @param name, nombre del jugador.
+            @param dif, dificultad del juego.
+            @param saved, si es un juego guardado o no.
+            @author Iván Aveiga.
+            @author Kevin Campuzano.
+        """
+        
+        """
+            Si no es un juego guardado crea un nuevo juego
+        """
+        if not saved:   
             self.game = Juego(name, dif)
             self.game.nombre = name
             self.game.dif = dif
             self.InitTimer()
-        else:   #Si está guardado carga el juego
+        else:   
             self.cargar()
 
-        #Recorre el tablero a jugar y pasa los valores a la interfaz
+        """
+            Pasa los valores a la interfaz, las celdas a no jugar(celdas por defecto) son
+            deshabilitadas y son pintadas de color verde. Además que indica el nombre y
+            la dificultad del jugador en la pantalla.
+        """
         for i in range(9):
             for j in range(9):
                 value = self.game.juego.getCell(i,j).getValue()
