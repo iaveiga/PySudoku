@@ -16,6 +16,7 @@ class MainWindow(QtGui.QMainWindow):
 
     #Accion al momento de dar click en el boton Guardar
     def guardar(self):
+<<<<<<< HEAD
         """
             Guarda una partida de Sudoku con lo siguiente:
             * Nombre del Jugador.
@@ -27,6 +28,9 @@ class MainWindow(QtGui.QMainWindow):
             @author Iván Aveiga
         """
         self.timer.stop()
+=======
+        self.StopTimer()
+>>>>>>> 806f5b6cb3a2fb4ef7a95428e48c762a0204554c
         path = QtGui.QFileDialog.getSaveFileName(self,'Save File', '.sudo')
         if path != "":
             self.parse()
@@ -62,19 +66,15 @@ class MainWindow(QtGui.QMainWindow):
         #inicializando el cronometro
     def InitTimer(self):
         self.ss=0
-        self.mm=0
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.count)
         self.timer.start(1000)
-        self.time_n= str(self.mm)+ ":" + str(self.ss)
+        self.time_n= str(self.ss/60)+ ":" + str(self.ss%60)
         self.ui.lcdNumber.display(self.time_n)
 
     def count(self):
         self.ss = self.ss + 1
-        if self.ss > 59:
-            self.ss = 0
-            self.mm= self.mm +1
-        self.time_n= str(self.mm)+ ":" + str(self.ss)
+        self.time_n= str(self.ss/60)+ ":" + str(self.ss%60)
         self.ui.lcdNumber.display(self.time_n)
         self.ui.lcdNumber.show()
 
