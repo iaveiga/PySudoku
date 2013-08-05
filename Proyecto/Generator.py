@@ -1,34 +1,65 @@
+# -*- coding: cp1252 -*-
 import random
 
 class Generator():
     def __init__(self):
-        """Inicializa el board (tablero) vacio."""
+        """
+            Crea un tablero vacío.
+            @author Iván Aveiga.
+        """
         self.limpiar_board()
         self.puzzle = []
 
     def limpiar_board(self):
-        """Para indicar un casillero vacio, se utiliza la convencion del foro,
-        donde se explicita que un casillero vacio se representa con un punto (.)"""
+        """
+            Limpia la matriz, representando con None un casillero vacío.
+            @author Iván Aveiga.
+        """
         self.board = []
         for fila in xrange(9):
             self.board.append([None for i in xrange(9)])
 
     def en_fila(self, board, fila, numero):
-        """Devuelve True si 'numero' se encuentra en la fila."""
+        """
+            Determina si un número pertenece a la fila de la matriz.
+            @param board, matriz.
+            @param fila, fila a recorrer.
+            @param número a buscar.
+            @return True si numero se encuentra en la fila de la matriz.
+            @return False si numero no se encuentra en la fila de la matriz.
+            @author Iván Aveiga.
+        """
         if numero in board[fila] and numero != None:
             return True
         else:
             return False
 
     def en_columna(self, board, col, numero):
-        """Devuelve True si 'numero' se encuentra en la columna 'col'"""
+        """
+            Determina si un número pertenece a la columna de la matriz.
+            @param board, matriz.
+            @param col, columna a recorrer.
+            @param número a buscar.
+            @return True si numero se encuentra en la columna de la matriz.
+            @return False si numero no se encuentra en la columna de la matriz.
+            @author Iván Aveiga.
+        """
         for fila in xrange(9):
             if board[fila][col] == numero and numero != None:
                 return True
         return False
 
     def en_cuadro(self, board, f_cuadro, c_cuadro, numero):
-        """Devuelve True si 'numero' se encuentra en el cuadro [f_cuadro, c_cuadro]"""
+        """
+            Determina si un número se encuentra en una submatriz.
+            @param board, matriz.
+            @param f_cuadro, inicio de submatriz en fila.
+            @param c_cuadro, inicio de la submatriz en columna.
+            @param numero, número a buscar.
+            @return True si numero se encuentra en la submatriz.
+            @return False si numero no se encuentra en la submatriz.
+            @author Iván Aveiga.
+        """
         for fila in range(3 * f_cuadro, 3 * f_cuadro + 3):
             for col in range(3 * c_cuadro, 3 * c_cuadro + 3):
                 if board[fila][col] == numero and numero != None:
@@ -36,7 +67,10 @@ class Generator():
         return False
 
     def poblar_board(self):
-        """Esta funcion completa el tablero creando un sudoku con las reglas basicas (level-1)"""
+        """
+            Genera un tablero de 9x9 enteros del 1 al 9.
+            @author Iván Aveiga.
+        """
         random.seed()
         col = 0
         while col < 9:
@@ -77,6 +111,11 @@ class Generator():
 
 
     def gen_puzzle(self, dificultad):
+        """
+            Genera celdas al azar para removerlas y formar el tablero a jugar.
+            @param dificultad, dificultad del tablero; se basa en el número de casillas a remover.
+            @author Iván Aveiga.
+        """
         # con el board lleno genera un puzzle, vaciando celdas al azar
         # obtener posicion al azar
         self.puzzle = self.board

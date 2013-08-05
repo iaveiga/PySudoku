@@ -16,12 +16,14 @@ class MainWindow(QtGui.QMainWindow):
 
     #Accion al momento de dar click en el boton Guardar
     def guardar(self):
+        self.timer.stop()
         path = QtGui.QFileDialog.getSaveFileName(self,'Save File', '.sudo')
         if path != "":
             self.parse()
             file_ = open(path,"wb")
             cPickle.dump(self.game,file_,protocol = 2)
             file_.close()
+        self.timer.start()
 
     def cargar(self):
         path = QtGui.QFileDialog.getOpenFileName(self,'Open File', '.sudo')
