@@ -95,7 +95,7 @@ class MainWindow(QtGui.QMainWindow):
                 for j in range(0,9):
                     self.ui.gridLayout.itemAtPosition(i,j).widget().setEnabled(False)
             nombre = self.game.nombre
-            ayuda = str(3 - self.game.hints)
+            ayuda = str(5 - self.game.hints)
             msg = "Felicitaciones " + nombre + " \nGanaste usando " + ayuda + " ayudas."
             resp = QtGui.QMessageBox.information(self, "PySudoku", msg, QtGui.QMessageBox.Ok)
 
