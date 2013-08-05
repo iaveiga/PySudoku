@@ -30,6 +30,12 @@ class Inicio(QtGui.QMainWindow):
         rs = QtGui.QMessageBox.information(self, "Rankings",  msg, QtGui.QMessageBox.Ok)
 
     def Jugar(self):
+        """
+            Manda la comunicacion del nombre junto con el nivel de dificultad escogido por el usuario
+            a la ventana de Juego, se valida que en el caso de que el campo de nombre este vacio no le permita continuar
+            al juego, tambien se valida que si ninguna dificultad esta selecciona no le permita jugar
+            @author Kevin Campuzano.
+        """
         if(self.ui.rbt_facil.isChecked() and self.ui.txt_nombre_jugador.text() != ""):
             #mando a ventana MainWindow(nombre del Jugador ,Dificultad:1)
             self.setVisible(False)
@@ -64,12 +70,20 @@ class Inicio(QtGui.QMainWindow):
             #No ha dado en ni un radioButton o no ha puesto el nombre o no ha hecho ninguno de los dos
 
     def Cargar(self):
+         """
+            Evento que realiza el boton cargar, que es el cual carga el juego antiguo y lo setea para volver a jugar.
+            @author Kevin Campuzano.
+        """
         self.w = MainWindow()
         self.w.loadNew(" ", 0, True)
         self.setVisible(False)
         self.w.show()
 
     def Salir(self):
+         """
+            Evento para salir del juego
+            @author Kevin Campuzano.
+        """
         sys.exit(0)
 
 if __name__ == "__main__":
