@@ -1,0 +1,5 @@
+Nath,152
+Pepe,250
+Annabell,300
+Iván,450
+Janet, 800
