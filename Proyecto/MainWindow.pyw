@@ -16,7 +16,7 @@ class MainWindow(QtGui.QMainWindow):
 
     #Accion al momento de dar click en el boton Guardar
     def guardar(self):
-        self.timer.stop()
+        self.StopTimer()
         path = QtGui.QFileDialog.getSaveFileName(self,'Save File', '.sudo')
         if path != "":
             self.parse()
@@ -45,19 +45,15 @@ class MainWindow(QtGui.QMainWindow):
         #inicializando el cronometro
     def InitTimer(self):
         self.ss=0
-        self.mm=0
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.count)
         self.timer.start(1000)
-        self.time_n= str(self.mm)+ ":" + str(self.ss)
+        self.time_n= str(self.ss/60)+ ":" + str(self.ss%60)
         self.ui.lcdNumber.display(self.time_n)
 
     def count(self):
         self.ss = self.ss + 1
-        if self.ss > 59:
-            self.ss = 0
-            self.mm= self.mm +1
-        self.time_n= str(self.mm)+ ":" + str(self.ss)
+        self.time_n= str(self.ss/60)+ ":" + str(self.ss%60)
         self.ui.lcdNumber.display(self.time_n)
         self.ui.lcdNumber.show()
 
