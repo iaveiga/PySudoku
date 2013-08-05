@@ -29,7 +29,7 @@ class MainWindow(QtGui.QMainWindow):
             @author Iván Aveiga
         """
         self.timer.stop()
-        self.game.time =  #aquí pon int( valor del timer en segundos)
+        self.game.time =  0#aquí pon int( valor del timer en segundos)
         path = QtGui.QFileDialog.getSaveFileName(self,'Save File', '.sudo')
         if path != "":
             self.parse()
