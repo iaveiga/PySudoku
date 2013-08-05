@@ -16,6 +16,16 @@ class MainWindow(QtGui.QMainWindow):
 
     #Accion al momento de dar click en el boton Guardar
     def guardar(self):
+        """
+            Guarda una partida de Sudoku con lo siguiente:
+            * Nombre del Jugador.
+            * Dificultad.
+            * Tablero completo.
+            * Tablero a jugar progresado.
+            * Tiempo de juego.
+            El objeto se serializa y se almacena en un archivo .sudo .
+            @author Iván Aveiga
+        """
         self.timer.stop()
         path = QtGui.QFileDialog.getSaveFileName(self,'Save File', '.sudo')
         if path != "":
@@ -26,6 +36,10 @@ class MainWindow(QtGui.QMainWindow):
         self.timer.start()
 
     def cargar(self):
+        """
+            Carga una partida de Sudoku almacenada en un archivo .sudo .
+            @author Iván Aveiga.
+        """
         path = QtGui.QFileDialog.getOpenFileName(self,'Open File', '.sudo')
         if path != "":
             file_ = open(path,"rb")
@@ -33,7 +47,10 @@ class MainWindow(QtGui.QMainWindow):
             self.game = ob
 
     def parse(self):
-        #Pasa los valores de la interfaz gráfica al Sudoku juego.
+        """
+            Pasa los valores de la interfaz gráfica al tablero de Sudoku interno.
+            @author Iván Aveiga.
+        """
         for i in range(0,9):
             for j in range(0,9):
                 if self.ui.gridLayout.itemAtPosition(i,j).widget().isEnabled():
@@ -65,11 +82,20 @@ class MainWindow(QtGui.QMainWindow):
         self.timer.stop()
 
     def verificar(self):
-        #Parsea los valores de la interfaz al tablero juego (correctamente)
+        """
+            Verifica que esté correctamente resuelto el Sudoku.
+            Para esto
+            -Se obtiene los valores de la interfaz gráfica
+            -Se obtiene las celdas habilitadas (celdas a completar).
+            -Se pinta todas estas celdas de color blanco
+            -Se cuenta cuántas celdas están con valores en blanco.
+            -Se compara los sudokus (sudoku completo, sudoku jugado).
+            -Se obtiene la lista de celdas erróneas y se pintan de otro color.
+            -Si no hay celdas en blanco y si no hay celdas erróneas el jugador ganó el juego.
+            -Si no usó ayudas y dependiendo del tiempo ingresa al ranking.
+            @author Iván Aveiga.            
+        """
         self.parse()
-
-        #Pinta las celdas por defecto (blanco)
-        #Cuenta cuantas celdas vacías hay
         cont = 0
         for i in range(0,9):
             for j in range(0,9):
@@ -81,8 +107,7 @@ class MainWindow(QtGui.QMainWindow):
                     self.pintar(i,j,color)
                     if val not in [1,2,3,4,5,6,7,8,9]:
                         cont += 1
-
-        #obtiene las celdas erróneas y las pinta de color (254,155,153)
+                        
         ls_error = self.game.tablero.compare(self.game.juego)
         for i in range(0,len(ls_error)):
             x = ls_error[i].getX()
@@ -90,8 +115,6 @@ class MainWindow(QtGui.QMainWindow):
             color = QtGui.QColor(254,155,153)
             self.pintar(x,y,color)
 
-        print len(ls_error)
-        print cont
         if len(ls_error) == 0 and cont == 0:
             for i in range(0,9):
                 for j in range(0,9):
@@ -102,6 +125,13 @@ class MainWindow(QtGui.QMainWindow):
             resp = QtGui.QMessageBox.information(self, "PySudoku", msg, QtGui.QMessageBox.Ok)
 
     def pintar(self,x = int, y = int, color = QtGui.QColor):
+        """
+            Cambia el color de fondo de un qlineedit.
+            @param x, coordenada en x del qlineedit.
+            @param y, coordenada en y del qlineedit.
+            @param color, color a setear.
+            @author Iván Aveiga.            
+        """
         pal = self.ui.gridLayout.itemAtPosition(x,y).widget().palette()
         pal.setColor(QtGui.QPalette.Base,QtGui.QColor(color))
         self.ui.gridLayout.itemAtPosition(x,y).widget().setPalette(pal)
@@ -112,9 +142,18 @@ class MainWindow(QtGui.QMainWindow):
 
     #Accion al momento de dar click en el submenu Salir
     def Salir(self):
+        """
+            Sale de la aplicación.
+            @author Kevin Campuzano.
+        """ 
         sys.exit(0)
 
     def crear(self):
+        """
+            Añade 9x9 qlineedit en un Gridlayout a jugar con la configuración de longitud,
+            valores soportados, tamaño.
+            @author Iván Aveiga            
+        """
         for i in range(0,9):
             for j in range(0,9):
                 c = QtGui.QLineEdit()
@@ -159,6 +198,12 @@ class MainWindow(QtGui.QMainWindow):
 
     #Intercambio de Datos de la Ventana Inicio a la ventana MainWindow
     def SetDatosPrincipales(self,jugador_nombre,value):
+        """
+            Recibe los datos de la ventana de inicio y crea un nuevo juego.
+            @param jugador_nombre, nombre del jugador.
+            @param value, dificultad del juego
+            @author Kevin Campuzano
+        """
         self.ui.txt_jugador.setText(jugador_nombre);
         if value==1:
             self.ui.txt_nivel.setText("Fácil")
@@ -174,6 +219,14 @@ class MainWindow(QtGui.QMainWindow):
              self.loadNew(jugador_nombre,4, False)
 
     def ayuda(self):
+        """
+            Implementa las ayudas del juego.
+            Si tiene ayudas disponibles, coloca el valor correcto de una de las celdas a jugar e
+            inhabilita la celda y se cambia el color de fondo para indicar que ha sido generado
+            por el juego..
+            Si no tiene ayudas disponibles se inhabilita el botón de ayudas.
+            @author Iván Aveiga, Kevin Campuzano.
+        """
         if self.game.hints > 0:
             x = random.randint(0,8)
             y = random.randint(0,8)
