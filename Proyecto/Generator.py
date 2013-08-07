@@ -19,7 +19,7 @@ class Generator():
         for fila in xrange(9):
             self.board.append([None for i in xrange(9)])
 
-    def en_fila(self, board, fila, numero):
+    def en_fila(self, board, fila , numero = int):
         """
             Determina si un número pertenece a la fila de la matriz.
             @param board, matriz.
@@ -34,7 +34,7 @@ class Generator():
         else:
             return False
 
-    def en_columna(self, board, col, numero):
+    def en_columna(self, board, col, numero = int):
         """
             Determina si un número pertenece a la columna de la matriz.
             @param board, matriz.
@@ -49,13 +49,13 @@ class Generator():
                 return True
         return False
 
-    def en_cuadro(self, board, f_cuadro, c_cuadro, numero):
+    def en_cuadro(self, board, f_cuadro = int, c_cuadro = int, numero = int ):
         """
             Determina si un número se encuentra en una submatriz.
             @param board, matriz.
-            @param f_cuadro, inicio de submatriz en fila.
-            @param c_cuadro, inicio de la submatriz en columna.
-            @param numero, número a buscar.
+            @param int f_cuadro, inicio de submatriz en fila.
+            @param int c_cuadro, inicio de la submatriz en columna.
+            @param int numero, número a buscar.
             @return True si numero se encuentra en la submatriz.
             @return False si numero no se encuentra en la submatriz.
             @author Iván Aveiga.
@@ -110,10 +110,10 @@ class Generator():
                 col = 0
 
 
-    def gen_puzzle(self, dificultad):
+    def gen_puzzle(self, dificultad = int):
         """
             Genera celdas al azar para removerlas y formar el tablero a jugar.
-            @param dificultad, dificultad del tablero; se basa en el número de casillas a remover.
+            @param int dificultad, dificultad del tablero; se basa en el número de casillas a remover.
             @author Iván Aveiga.
         """
         # con el board lleno genera un puzzle, vaciando celdas al azar
@@ -128,9 +128,9 @@ class Generator():
             casillas = random.randint(28,31)
         else:
             casillas = random.randint(23,27)
-            
+
         casillas = 81 - casillas
-        
+
         while (i < casillas):
 
             pos = int(random.randint(0, 80))

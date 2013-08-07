@@ -1,4 +1,4 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
 
 from PyQt4 import QtCore, QtGui
 import sys
@@ -6,6 +6,7 @@ from ui_MainWindow import Ui_MainWindow
 from Juego import Juego
 import cPickle
 import random
+import os
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -15,7 +16,7 @@ class MainWindow(QtGui.QMainWindow):
         QtGui.QWidget.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.crear() #crea los qlineedit vacÌos
+        self.crear() #crea los qlineedit vac√≠os
 
     def guardar(self):
         """
@@ -26,7 +27,7 @@ class MainWindow(QtGui.QMainWindow):
             * Tablero a jugar progresado.
             * Tiempo de juego.
             El objeto se serializa y se almacena en un archivo .sudo .
-            @author Iv·n Aveiga
+            @author Iv√°n Aveiga
         """
         self.StopTimer()
         self.game.time = self.getTime()
@@ -42,7 +43,7 @@ class MainWindow(QtGui.QMainWindow):
     def cargar(self):
         """
             Carga una partida de Sudoku almacenada en un archivo .sudo .
-            @author Iv·n Aveiga.
+            @author Iv√°n Aveiga.
         """
         path = QtGui.QFileDialog.getOpenFileName(self,'Open File', '.sudo')
         if path != "":
@@ -52,8 +53,8 @@ class MainWindow(QtGui.QMainWindow):
 
     def parse(self):
         """
-            Pasa los valores de la interfaz gr·fica al tablero de Sudoku interno.
-            @author Iv·n Aveiga.
+            Pasa los valores de la interfaz gr√°fica al tablero de Sudoku interno.
+            @author Iv√°n Aveiga.
         """
         for i in range(0,9):
             for j in range(0,9):
@@ -62,7 +63,7 @@ class MainWindow(QtGui.QMainWindow):
                     val = val.toInt(base = 10)[0]
                     self.game.juego.getCell(i,j).setValue(val)
 
-    #CRONOMETRO
+    #CRON√ìMETRO
         #inicializando el cronometro
     def InitTimer(self,seg):
         """
@@ -105,23 +106,23 @@ class MainWindow(QtGui.QMainWindow):
 
     def verificar(self):
         """
-            Verifica que estÈ correctamente resuelto el Sudoku.
+            Verifica que est√© correctamente resuelto el Sudoku.
             Para esto
-            -Se obtiene los valores de la interfaz gr·fica
+            -Se obtiene los valores de la interfaz gr√°fica
             -Se obtiene las celdas habilitadas (celdas a completar).
             -Se pinta todas estas celdas de color blanco
-            -Se cuenta cu·ntas celdas est·n con valores en blanco.
+            -Se cuenta cu√°ntas celdas est√°n con valores en blanco.
             -Se compara los sudokus (sudoku completo, sudoku jugado).
-            -Se obtiene la lista de celdas errÛneas y se pintan de otro color.
-            -Si no hay celdas en blanco y si no hay celdas errÛneas el jugador ganÛ el juego.
-            -Si no usÛ ayudas y dependiendo del tiempo ingresa al ranking.
-            @author Iv·n Aveiga.
+            -Se obtiene la lista de celdas err√≥neas y se pintan de otro color.
+            -Si no hay celdas en blanco y si no hay celdas err√≥neas el jugador gan√≥ el juego.
+            -Si no us√≥ ayudas y dependiendo del tiempo ingresa al ranking.
+            @author Iv√°n Aveiga.
         """
         self.parse()
         cont = 0
         for i in range(0,9):
             for j in range(0,9):
-                habilitado = self.ui.gridLayout.itemAtPosition(i,j).widget().isEnabled() #Si el qlineedit xy est· habilitado se pinta de blanco
+                habilitado = self.ui.gridLayout.itemAtPosition(i,j).widget().isEnabled() #Si el qlineedit xy est√° habilitado se pinta de blanco
                 val = self.ui.gridLayout.itemAtPosition(i,j).widget().text()
                 val = val.toInt(base = 10)[0]
                 if habilitado:
@@ -162,47 +163,58 @@ class MainWindow(QtGui.QMainWindow):
             @param x, coordenada en x del qlineedit.
             @param y, coordenada en y del qlineedit.
             @param color, color a setear.
-            @author Iv·n Aveiga.
+            @author Iv√°n Aveiga.
         """
         pal = self.ui.gridLayout.itemAtPosition(x,y).widget().palette()
         pal.setColor(QtGui.QPalette.Base,QtGui.QColor(color))
         self.ui.gridLayout.itemAtPosition(x,y).widget().setPalette(pal)
 
     def setRanking(self, name = str, time = int):
-        flag = False
-        file_ = open("stats.txt","r")
-        lines = file_.readlines()
-        line = name + "," + str(time) + "\n"
-        file_.close()
+        """
+            Se encarga de determinar si un jugador y su puntaje entra en el ranking.
+            Si no existe el archivo de rankings, se crea por defecto un nuevo ranking.
+            @param name, nombre del jugador.
+            @param time, tiempo del jugador.
+            @return True si ingresa en el ranking.
+            @return False si no ingresa en el ranking.
+            @author Iv√°n Aveiga
+        """
 
-        for i in range(0,len(lines)):
-            l = lines[i].rstrip("\n").split(",")
-            if time < int(l[1]):
-                lines[i] = line
-                flag = True
-                break
-        for i in range(0,len(lines)):
-            print lines[i]
-
-        f = open("stats.txt","w")
-        f.writelines(lines)
+        if not os.path.exists(r'ranking.dat'):
+            r = QtGui.QMessageBox.critical(self, "Rankings", "Error, no existe rankings, se crear√° por defecto",QtGui.QMessageBox.Ok)
+            li = [["AAA",9999], ["BBB",9999], ["CCC", 9999], ["DDD", 9999], ["EEE", 9999]]
+            f = open("ranking.dat","w")
+            cPickle.dump(li, f, protocol = 2)
+            f.close()
+    
+        f = open("ranking.dat","r")
+        li = cPickle.load(f)
         f.close()
 
-        return flag
+        for i in range(0,len(li)):
+            if time < li[i][1]:
+                li[0][0] = name
+                li[0][1] = time
+                flag = True
+                break
 
+        f = open("ranking.dat","w")
+        cPickle.dump(li,f,protocol = 2)
+        f.close()
+        return flag
 
     def Salir(self):
         """
-            Sale de la aplicaciÛn.
+            Sale de la aplicaci√≥n.
             @author Kevin Campuzano.
         """
         sys.exit(0)
 
     def crear(self):
         """
-            AÒade 9x9 qlineedit en un Gridlayout a jugar con la configuraciÛn de longitud,
-            valores soportados, tamaÒo.
-            @author Iv·n Aveiga
+            A√±ade 9x9 qlineedit en un Gridlayout a jugar con la configuraci√≥n de longitud,
+            valores soportados, tama√±o.
+            @author Iv√°n Aveiga
         """
         for i in range(0,9):
             for j in range(0,9):
@@ -214,11 +226,11 @@ class MainWindow(QtGui.QMainWindow):
 
     def loadNew(self, name = str, dif = int, saved = bool):
         """
-            Carga los valores del juego a la interfaz gr·fica.
+            Carga los valores del juego a la interfaz gr√°fica.
             @param name, nombre del jugador.
             @param dif, dificultad del juego.
             @param saved, si es un juego guardado o no.
-            @author Iv·n Aveiga.
+            @author Iv√°n Aveiga.
             @author Kevin Campuzano.
         """
 
@@ -236,7 +248,7 @@ class MainWindow(QtGui.QMainWindow):
 
         """
             Pasa los valores a la interfaz, las celdas a no jugar(celdas por defecto) son
-            deshabilitadas y son pintadas de color verde. Adem·s que indica el nombre y
+            deshabilitadas y son pintadas de color verde. Adem√°s que indica el nombre y
             la dificultad del jugador en la pantalla.
         """
         for i in range(9):
@@ -254,7 +266,7 @@ class MainWindow(QtGui.QMainWindow):
                 self.pintar(i,j,color)
         self.ui.txt_jugador.setText(self.game.nombre)
         if self.game.dif == 1:
-            self.ui.txt_nivel.setText("F·cil")
+            self.ui.txt_nivel.setText("F√°cil")
         elif self.game.dif == 2:
             self.ui.txt_nivel.setText("Normal")
         elif self.game.dif == 3:
@@ -272,7 +284,7 @@ class MainWindow(QtGui.QMainWindow):
         """
         self.ui.txt_jugador.setText(jugador_nombre);
         if value==1:
-            self.ui.txt_nivel.setText("F·cil")
+            self.ui.txt_nivel.setText("F√°cil")
             self.loadNew(jugador_nombre,1, False)
         elif value== 2:
             self.ui.txt_nivel.setText("Normal")
@@ -290,8 +302,8 @@ class MainWindow(QtGui.QMainWindow):
             Si tiene ayudas disponibles, coloca el valor correcto de una de las celdas a jugar e
             inhabilita la celda y se cambia el color de fondo para indicar que ha sido generado
             por el juego..
-            Si no tiene ayudas disponibles se inhabilita el botÛn de ayudas.
-            @author Iv·n Aveiga, Kevin Campuzano.
+            Si no tiene ayudas disponibles se inhabilita el bot√≥n de ayudas.
+            @author Iv√°n Aveiga, Kevin Campuzano.
         """
         if self.game.hints > 0:
             x = random.randint(0,8)

@@ -1,9 +1,11 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
+
 from PyQt4 import QtCore, QtGui
 import sys
 from ui_Inicio import Ui_Inicio_Frame
 from MainWindow import MainWindow
-
+import cPickle
+import os
 
 class Inicio(QtGui.QMainWindow):
     def __init__(self):
@@ -13,20 +15,30 @@ class Inicio(QtGui.QMainWindow):
 
     def Stats(self):
         """
-            Muestra las estadÌsticas en un informationBox.
-            No se muestra el nivel en que se resolviÛ el Sudoku.
-            Se muestra en el formato minutos:segundos.
-            @author Iv·n Aveiga.
+            Muestra las estad√≠sticas en un informationBox.
+            No se muestra el nivel en que se resolvi√≥ el Sudoku.
+            Se muestra en el formato minutos:segundos. 
+            Si el archivo de rankings es eliminado se crea un nuevo archivo
+            con los valores por defecto.
+            @author Iv√°n Aveiga.
         """
-        file_= open("stats.txt","r")
-        lines = file_.readlines()
-        msg = ""
-        for i in range(0,len(lines)):
-            aux = lines[i].rstrip("\n").split(",")
-            t = int(aux[1])
-            time = "(" + str(t/60) + " : " + str(t %60) + ")"
-            msg = msg + aux[0] + "\n" + time + "\n \n"
+        if not os.path.exists(r'ranking.dat'):
+            r = QtGui.QMessageBox.critical(self, "Rankings", "Error, no existe rankings, se crear√° por defecto",QtGui.QMessageBox.Ok)
+            li = [["AAA",9999], ["BBB",9999], ["CCC", 9999], ["DDD", 9999], ["EEE", 9999]]
+            f = open("ranking.dat","w")
+            cPickle.dump(li, f, protocol = 2)
+            f.close()
+
+        file_= open("ranking.dat","r")
+        li = cPickle.load(file_)
         file_.close()
+
+        msg = ""
+        for i in range(0,len(li)):
+            time = li[i][1]
+            t = "(" + str(time/60) + " : " + str(time%60) + ")"
+            msg = msg + li[i][0] + " \t" + t + "\n \n"
+
         rs = QtGui.QMessageBox.information(self, "Rankings",  msg, QtGui.QMessageBox.Ok)
 
     def Jugar(self):
